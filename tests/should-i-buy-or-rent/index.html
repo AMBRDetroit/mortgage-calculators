@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Fixed vs ARM</title>
+		<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.20.0.css">
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
+		<script src="response.js"></script>
+		<script src="../../src/mortgageCalculators.js"></script>
+		<script>
+			// Calculate Monthly Mortgage Payments
+			QUnit.dump.maxDepth = 6;
+			QUnit.test("Rent Vs Own", function(assert) {
+				var args = {
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 0,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					currentAnnualInterest : 0,
+					incomeTaxRate : 28
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.compareBuyVsRent(args);
+				assert.deepEqual(result, response , "");
+			});	
+		</script>
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+	</body>
+</html>

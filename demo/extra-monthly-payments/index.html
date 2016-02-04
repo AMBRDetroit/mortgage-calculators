@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Monthly Mortgage with Extra Monthly Payments Calculator</title>
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="../../src/mortgageCalculator.js"></script>
+		<style>
+			body{margin:0;padding:0;font-size:16px;}
+			p{color:#666;}
+			.container{width:80%;margin:0 auto;}
+			.form{background-color:#ccc;padding:50px;}
+			.form__entry{margin:10px 0;}
+			.form__entry-label{font-weight:bold; display:block;}
+			.form__entry-field{ padding:10px 0; border-radius:5px;}
+			.btn{background-color:#0053A0; padding:14px 20px;color:#FFF; border:transparent;border-radius:5px;font-size:1rem;}
+			
+		</style>
+		
+	</head>
+	<body>
+		<div class="container">
+			<form class="form">
+				<div class="form__entry">
+					<label class="form__entry-label" >Loan Amount</label>
+					<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Interest Rate</label>
+					<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Term (Years)</label>
+					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Extra Payment Amount</label>
+					<input type="text" class="form__entry-field" name="extraPaymentAmount" id="extraPaymentAmount">
+				</div>
+				<button class="btn" type="submit">Calculate</button>
+			</form>
+			<div class="results">
+				<h2>With Extra Monthly Payments</h2>
+				<table class="table-1">
+					<thead>
+						<tr>
+							<th> Total Cost </th>
+							<th> Total Monthly Payment </th>
+						</tr>
+					</thead>
+					<tbody class="table-1__tbody">
+					</tbody>
+				</table>
+				<p>With Extra Monthly Payments Breakdown</p>
+				<table class="table-2">
+					<thead>
+						<tr>
+							<th> Year </th>
+							<th> Total Interest </th>
+							<th> Total Principal Payment</th>
+							<th> Remaining Balance </th>
+							<th> Monthly Breakdown </th>
+						</tr>
+					</thead>
+					<tbody class="table-2__tbody">
+					</tbody>
+				</table>
+				<p>Monthly Breakdown</p>
+				<table class="table-3">
+					<thead>
+						<tr>
+							<th>Month</th>
+							<th>Principal Payment</th>
+							<th>Interest Payment</th>
+							<th>Total Monthly Payment</th>
+							<th>Remaining Balance </th>
+						</tr>
+					</thead>
+					<tbody class="table-3__tbody"></tbody>
+				</table>
+				<h2>Without Extra Monthly Payments</h2>
+				<table class="table-4">
+					<thead>
+						<tr>
+							<th> Total Cost </th>
+							<th> Total Monthly Payment </th>
+						</tr>
+					</thead>
+					<tbody class="table-4__tbody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<script>
+			$(function(){
+				var results;
+				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					var errors = [];
+					var args = $(this).serializeArray();
+					
+					$.each(args,function(i,arg){
+						if(isNaN(parseFloat(arg.value))){
+							errors.push("Please enter a number");
+						}else if( parseFloat(arg.value) < 1 ){
+							errors.push("Please a value greater than 0");
+						}else{
+							arg.value = parseFloat(arg.value);
+						}
+					});
+					if(errors.length > 0){
+						console.log(errors);
+					}else{
+						var args = {
+							loanAmount : args[0].value,
+							interestRate : args[1].value,
+							termInYears : args[2].value,
+							extraPaymentAmount : args[3].value
+						}
+						 results = mtgcalculator.extraMonthlyPayments(args);
+						console.log(results);
+						$('.table-1__tbody').html('<tr><td>'+results.withExtraPayment.totalCost+'</td><td>'+results.withExtraPayment.totalMonthlyPayment+'</td></tr>');
+						$('.table-2__tbody').empty();
+						$.each(results.withExtraPayment.payments,function(j,annualPayment){
+							$('.table-2__tbody').append('<tr><td>'+ (j+1) +'</td><td>'+ annualPayment.annualInterestPayment+'</td><td>'+annualPayment.annualPrincipalPayment+'</td><td>'+annualPayment.balance+'</td><td class="monthly-breakdown" data-id="'+j+'">View</td></tr>');
+						});
+						$('.table-4__tbody').html('<tr><td>'+results.withoutExtraPayment.totalCost+'</td><td>'+results.withoutExtraPayment.totalMonthlyPayment+'</td></tr>');
+					}
+	
+				}).on('click','.monthly-breakdown',{},function(){
+					var thisYear = results.withExtraPayment.payments[$(this).data("id")];
+					var monthlyBreakdown = thisYear.monthlyBreakdown;
+					console.log(monthlyBreakdown);
+					$('.table-3__tbody').empty();
+					$.each(monthlyBreakdown,function(i,month){
+						$('.table-3__tbody').append('<tr><td>'+(i+1)+'</td><td>'+month.interestPayment+'</td><td>'+month.principalPayment+'</td><td>'+month.monthlyPayment+'</td><td>'+month.balance+'</td></tr>');
+					});
+				});
+			});
+		
+		</script>
+	</body>
+</html>
