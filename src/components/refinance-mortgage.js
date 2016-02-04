@@ -1,0 +1,55 @@
+window.mortgageCalculators.refinanceMortgage = function(args){
+	var args = validateInputArgs(args);
+	var loanAmount = args.loanAmount;
+	var interestRate = args.interestRate;
+	var termInYears = args.termInYears;
+	var newInterestRate = args.newInterestRate;
+	var newTermInYears = args.newTermInYears;
+	var numberOfPaymentsMade = args.paymentsMade;
+	// base monthly mortage payment
+	var monthlyMortgagePayment = calculateMonthlyMortgagePayment({
+		loanAmount : loanAmount,
+		interestRate : interestRate,
+		termInYears : termInYears
+	});
+	var remainingBalance = loanAmount;
+	var totalPaid = 0; 
+	var totalInterest = 0;
+	for(var i=0; i < numberOfPaymentsMade; i++ ){
+		// convert interest rate into a monthly percentage rate
+		var monthlyInterestPayment = calculateMonthlyInterestPayment((interestRate/100)/12,remainingBalance);
+		var monthlyPrincipalPayment = monthlyMortgagePayment - monthlyInterestPayment;
+		// if the total monthly payment is no longer less than remaining balance, then we are at our last payment
+		if( (remainingBalance - monthlyPrincipalPayment) >= 0 ){	
+			remainingBalance -= monthlyPrincipalPayment;
+		}
+		totalPaid += monthlyPrincipalPayment;
+		totalInterest +=  monthlyInterestPayment;
+	}
+	// calculate the remaining interest at the end of the number of payments made
+	var remainingInterest = (monthlyMortgagePayment * termInYears * 12)- loanAmount - totalInterest; 
+	// the new mortgage total is the remaining balance
+	var newMortgageTotal = remainingBalance;
+	// lets calculate the new monthly mortgage payment with the new mortgage total
+	var newMonthlyMortgagePayment = calculateMonthlyMortgagePayment({
+		loanAmount : newMortgageTotal,
+		interestRate : newInterestRate,
+		termInYears : newTermInYears
+	});
+	//calculate remaining total interest 
+	var newRemainingInterest = (newMonthlyMortgagePayment * newTermInYears * 12) - remainingBalance; 
+	// build out the response
+	var response = {
+		interestSaved : formatResult(remainingInterest - newRemainingInterest),
+		oldMonthlyMortgage : {
+			monthlyMortgagePayment : formatResult(monthlyMortgagePayment),
+			remainingInterest : formatResult(remainingInterest)
+		},
+		newMonthlyMortgage : {
+			newMortgageTotal : formatResult(newMortgageTotal),
+			monthlyMortgagePayment : formatResult(newMonthlyMortgagePayment),
+			remainingInterest : formatResult(newRemainingInterest)
+		}
+	};
+	return response;
+};
