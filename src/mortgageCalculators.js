@@ -394,8 +394,7 @@
 				interestRate : interestRate,
 				termInYears : termInYears
 			});
-			console.log(monthlyMortgagePayment);
-			var totalCostOfRenting = 0;
+			
 			var totalInterest = 0;
 			var totalPrincipalPayment = 0;
 			var totalTaxSavings = 0;
@@ -420,24 +419,24 @@
 						monthlyPrincipalPayment = remainingBalance;
 						remainingBalance -= monthlyPrincipalPayment;
 					}
+					
 					// sum monthly principal payment
 					totalPrincipalPayment += monthlyPrincipalPayment;
 					// sum monthly interest
 					totalInterest += monthlyInterestPayment;
 					// sum up tax 
 					totalTaxSavings += monthlyInterestPayment * (incomeTax/100);
+					// newest monthly rent value 
+					monthlyRent +=  monthlyRent*((expectedAnnualRentIncrease/100)/12);
 					// monthly cash outflow in buying scenario = monthly mortgage payment - monthlyIncome tax ( + property tax + maintenance + insurance + etc ) 
 					monthlyCashOutFlow = monthlyMortgagePayment - (monthlyInterestPayment * (incomeTax/100) );
 					// calculate total saving when renting = sum of downpayment + (monthlyCashOutflow - monthlyRent)
-					savingWhenRenting += monthlyCashOutFlow - monthlyRent;
-					// Total Cost Of Renting = Sum of Monthly Rent
-					totalCostOfRenting += monthlyRent;
+					savingWhenRenting += (monthlyCashOutFlow - monthlyRent);
 					// total appreciation ( value of home) = total appreciaton  + (total appreciation * monthly appreciation rate)
 					totalAppreciation += totalAppreciation * ((annualAppreciation/12)/100) ;
 					// equity on home = total appreciation - remaining balance
 					equityOnHome = totalAppreciation - remainingBalance;
-					// Apply monthly rent increase 
-					monthlyRent +=  monthlyRent*((expectedAnnualRentIncrease/100)/12);
+					
 				}
 			}
 			
@@ -467,7 +466,6 @@
 				moneySavedByBuying: formatResult(moneySavedByBuying),
 					
 			}
-			console.log(response);
 			return response;
 		}
 	}
