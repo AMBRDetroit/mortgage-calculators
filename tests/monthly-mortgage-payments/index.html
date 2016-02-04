@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Monthly Mortgage Payments</title>
+		<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.20.0.css">
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
+		<script src="../../src/mortgageCalculators.js"></script>
+		<script>
+			// Calculate Monthly Mortgage Payments
+			QUnit.test("Monthly Mortgage Payments", function(assert) {
+				var args = {
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.monthlyMortgagePayments(args);
+				assert.deepEqual(result, 463.12 , "100,000 @ 3.75% for 30 years ");
+				
+				var args = {
+					loanAmount : "100000",
+					interestRate : "3.75 dafsdafsaf",
+					termInYears : "30"
+				}
+				var result = mortgageCalculators.monthlyMortgagePayments(args);
+			
+				assert.deepEqual(result, 463.12, "100,000 @ 3.75% for 30 years ");
+				
+				var args = {
+					loanAmount : 200000,
+					interestRate : 6.75,
+					termInYears : 5
+				}
+				var result = mortgageCalculators.monthlyMortgagePayments(args);
+			
+				assert.deepEqual(result, 3936.69, "200,000 @ 6.75% for 5 years ");
+			});	
+		</script>
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+	</body>
+</html>
