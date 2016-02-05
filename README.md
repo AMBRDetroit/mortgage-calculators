@@ -98,3 +98,44 @@ mortgageCalculators.compareFifteenVsThirtyYearMortgages({
 	}
 }
  ```
+### How Much Can I Borrow?
+#### Description:
+#### Usage:
+```javascript
+mortgageCalculators.howMuchCanIBorrow({
+	interestRate : 3.75,
+	grossMonthlyIncome : 4000,
+	monthlyDebtPayment :  400,
+	termInYears : 30,
+	downPayment : 5,
+	yearlyPropertyTax : 1200,
+	yearlyPropertyInsurance : 1200		
+});
+```
+#### Response:
+```javascript
+{
+  aggressive: {
+    downPayment: 12092.01,
+    loanAmount: 241840.27,
+    priceOfHome: 253932.28
+  },
+  conservative: {
+    downPayment: 9069.01,
+    loanAmount: 181380.2,
+    priceOfHome: 190449.21
+  },
+  futureMonthlyPayment: {
+    aggressive: {
+      principalAndInterest: 1320,
+      taxesAndInsurance: 200,
+      totalMonthlyPayment: 1120
+    },
+    conservative: {
+      principalAndInterest: 1040,
+      taxesAndInsurance: 200,
+      totalMonthlyPayment: 840
+    }
+  }
+}
+```
