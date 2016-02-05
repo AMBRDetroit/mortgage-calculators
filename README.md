@@ -202,7 +202,7 @@ mortgageCalculators.refinanceMortgage({
 ### Should I Buy or Rent a Home?
 #### Description: 
 This module calculates the potential benefits of buying a home as opposed to renting a home based on various given parameters. Returns a break down of the various costs of both buying vs renting, and a final value of money saved by buying. This final value may be negative to indicate a benefit of renting rather than buying.
-### Usage:
+#### Usage:
 ```javascript
 mortgageCalculators.compareBuyVsRent({
 	monthlyRent : 800,
@@ -218,7 +218,7 @@ mortgageCalculators.compareBuyVsRent({
 	incomeTaxRate : 28
 });
 ```
-### Response:
+#### Response:
 ```javascript
 {
 	currentValueOfHome : 269870.71,
