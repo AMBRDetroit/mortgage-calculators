@@ -20,3 +20,54 @@ This library contains 7 different modules used for different
   7. Should I Buy or Rent a home?
 
 ### Monthly Mortgage Payment
+ ```javascript
+Input Arguments:
+  var args = {
+		loanAmount : 100000,
+		interestRate : 3.75, (Annual Rate, will be converted to a monthly percentage in calculations)
+		termInYears : 30  
+	}
+	mortgageCalculators.monthlyMortgagePayments(args);
+	
+Response:
+	  Returns rounded (number)
+ ```
+  
+### Monthly Mortgage Payment With Extra Monthly Payments
+```javascript
+Input Arguments:
+	var args = {
+		loanAmount : 200000,
+		interestRate : 6.75,
+		termInYears : 5,
+		extraPaymentAmount : 300
+	}
+	mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
+	
+Returns (object)
+    var response = {
+    	withExtraPayment : {
+    		totalMonthlyPayment : 4236.69,
+    		interestRate : 6.75,
+    		term : 5,
+    		totalCost : 233018.07,
+    		payments : [{ // Array of Annual Break Down
+    	        annualInterestPayment: 12322.85,
+    	        annualPrincipalPayment: 38517.47,
+    	        balance: 161482.53,
+    	        monthlyBreakdown: [{ // Array of monthly breakdowns
+        				monthlyPayment : 4236.69,
+        				principalPayment :  3111.69,
+        				interestPayment :  1125,
+        				balance :  196888.31
+        			}...]
+    	  }...]
+    	},
+    	withoutExtraPayment : {
+    		totalMonthlyPayment : 3936.69,
+    		interestRate : 6.75,
+    		term : 5,
+    		totalCost : 236201.53
+    	}
+    }
+ ```
