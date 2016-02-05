@@ -72,17 +72,16 @@ Returns (object)
 	    }
  ```
 ### 15 Year VS 30 Year Mortgage
+#### Usage:
 ```javascript
-Usage:
-
 mortgageCalculators.compareFifteenVsThirtyYearMortgages({
 	loanAmount : 100000,
 	interestRate1 : 3.25,
 	interestRate2 : 3.75
 });
-	
-Response: 
-   
+```
+#### Response: 
+```javascript	
 {
 	fifteenYearMortgage : {
 		monthlyMortgagePayment : 702.67,
