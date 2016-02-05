@@ -166,3 +166,61 @@ mortgageCalculators.comparefixedRateVsARM({
 	}
 }
 ```
+### Refinance Mortgage
+#### Description:
+#### Usage:
+```javascript
+mortgageCalculators.refinanceMortgage({
+	interestRate : 3.75,
+	loanAmount : 100000,
+	termInYears : 30,
+	paymentsMade : 12,
+	newInterestRate : 2.75,
+	newTermInYears : 30	
+});
+```
+#### Response:
+```javascript
+{
+	interestSaved : 16899.79,
+	oldMonthlyMortgage : {
+		monthlyMortgagePayment : 463.12,
+		remainingInterest : 63003
+	},
+	newMonthlyMortgage : {
+		newMortgageTotal : 98161.22,
+		monthlyMortgagePayment : 400.73,
+		remainingInterest : 46103.21
+	}
+}
+```
+### Should I Buy or Rent a Home?
+#### Description:
+### Usage:
+```javascript
+mortgageCalculators.compareBuyVsRent({
+	monthlyRent : 800,
+	expectedAnnualRentIncrease : 5,
+	purchasePrice : 200000,
+	downPayment : 5,
+	interestRate : 6,
+	termInYears : 30,
+	closingCosts : 0,
+	annualAppreciation : 3,
+	howLongBeforeSelling : 10,
+	currentAnnualInterest : 0,
+	incomeTaxRate : 28
+});
+```
+### Response:
+```javascript
+{
+	currentValueOfHome : 269870.71,
+	totalOwedToBank : 159002.88,
+	equityOnHome : 110867.83,
+	savingWhenRenting : -7642.02,
+	transactionalCosts : 16192.24,
+	netCostOfOwnership : 94675.59,
+	moneySavedByBuying : 102317.61
+}
+```
