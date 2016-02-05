@@ -13,6 +13,12 @@
 			QUnit.config.reorder = false;
 			QUnit.dump.maxDepth = 6;
 		
+			// validate the inputs
+			QUnit.module('Input Validation');
+			// TODO
+			
+			// do the calculations
+			QUnit.module('Calculations');
 			QUnit.test("Rent Vs Own", function(assert) {
 				var args = {
 					monthlyRent : 800,

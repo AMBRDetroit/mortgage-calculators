@@ -13,6 +13,13 @@
 			QUnit.config.reorder = false;
 			QUnit.dump.maxDepth = 6;
 		
+			
+			// validate the inputs
+			QUnit.module('Input Validation');
+			// TODO
+			
+			// do the calculations
+			QUnit.module('Calculations');
 			QUnit.test("Refinance Mortgage", function(assert) {
 				var args = {
 					interestRate : 3.75,

@@ -12,7 +12,12 @@
 			QUnit.config.reorder = false;
 			QUnit.dump.maxDepth = 6;
 		
-			// Calculate Monthly Mortgage Payments
+			// validate the inputs
+			QUnit.module('Input Validation');
+			// TODO
+			
+			// do the calculations
+			QUnit.module('Calculations');
 			QUnit.test("Monthly Mortgage Payments", function(assert) {
 				var args = {
 					loanAmount : 100000,
