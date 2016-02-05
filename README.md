@@ -35,7 +35,7 @@ mortgageCalculators.monthlyMortgagePayments({
 Returns 463.12;
  ```
 ### Monthly Mortgage Payment With Extra Monthly Payments
-#### Description : 
+#### Description: 
 This module calculates the monthly monthly payment from above with an extra monthly payment amount. It returns an object with annual and monthly breakdowns. 
 #### Usage:
 ```javascript
