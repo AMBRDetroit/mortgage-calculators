@@ -82,7 +82,7 @@ Input Arguments:
 	mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
 	
 Returns (object)
-    	var response = {
+    var response = {
 		fifteenYearMortgage : {
 			monthlyMortgagePayment : 702.67,
 			totalPayments : 126480.38,
