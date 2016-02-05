@@ -11,6 +11,53 @@
 		<script>
 			// Calculate Monthly Mortgage Payments
 			QUnit.dump.maxDepth = 6;
+			
+			// validate the inputs
+			QUnit.module('Input Validation');
+			QUnit.test("loanAmount", function(assert) {
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					loanAmount : "aaaa",
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					loanAmount : "123",
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					loanAmount : "",
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					loanAmount : -1,
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					loanAmount : 0,
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					loanAmount : 100000,
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
+					loanAmount : 100000.56,
+					interestRate1 : 6.75,
+					interestRate2 : 4.75
+				}).error, undefined, "Float accepted.");
+			});
+			
+			// do the calculations
+			QUnit.module('Calculations');
 			QUnit.test("Fifteen VS Thirty Mortgage", function(assert) {
 				var args = {
 					loanAmount : 100000,
