@@ -1,3 +1,26 @@
+/*
+*	To calculate the comparison of rent vs buying of a mortgage pass in the following arguments :
+*	var args = {
+*		monthlyRent (number) : (number) 
+*		purchasePrice (number) : (number)
+*		downPayment (number) :  (number) ( will be converted into monthly percentage in calculations)
+*		interestRate (number) : interest rate as an annual percentage ( will be converted into  percentage in calculations)	
+*		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
+*		howLongBeforeSelling (number) : (number) ,
+*		currentAnnualInterest (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		incomeTaxRate (number) :  ( will be converted into percentage in calculations)	
+*	}
+*	response : an object
+*	var response = {
+*		icurrentValueOfHome : (number),
+*		totalOwedToBank : (number),
+*		equityOnHome : (number),
+*		savingWhenRenting : (number),
+*		transactionalCosts : (number),
+*		netCostOfOwnership : (number),
+*		moneySavedByBuying : (number)
+*	};
+*/
 window.mortgageCalculators.compareBuyVsRent = function(args){
 	var args = validateInputArgs(args);
 	// initalize rent info

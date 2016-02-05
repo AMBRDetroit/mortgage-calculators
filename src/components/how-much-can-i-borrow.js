@@ -1,3 +1,42 @@
+/*
+*	To calculate how much you can borrow(loan amount) pass in the following arguments :
+*	var args = {
+*		grossMonthlyIncome (number) : (number) 
+*		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
+*		downPayment (number) : (number)  ( will be converted into monthly percentage in calculations)	
+*		monthsBetweenAdjustments (number) : (number) between each adjustments,
+*		yearlyPropertyTax (number) : (will be converted to monthly value in calculations)
+*		yearlyPropertyInsurance (number) : (will be converted to monthly value in calculations)	
+*	}
+*
+*	response : an object
+*	var response = {
+*		conservative : {
+8			priceOfHome : (number),
+8			downPayment : (number),
+*			loanAmount : (number)
+*		},
+*		aggressive : {
+*			priceOfHome : (number),
+*			downPayment : (number),
+*			loanAmount : (number),
+*		},
+*		futureMonthlyPayment : {
+*			conservative : {
+*				principalAndInterest : (number),
+*				taxesAndInsurance : (number),
+*				totalMonthlyPayment : (number)
+*			},
+*			aggressive : {
+*				principalAndInterest : (number),
+*				taxesAndInsurance : (number),
+*				totalMonthlyPayment : (number)
+*			}
+*		}
+*	};
+*	
+*/
 window.mortgageCalculators.howMuchCanIBorrow = function(args){
 	var args = validateInputArgs(args);
 	// initialize valid args

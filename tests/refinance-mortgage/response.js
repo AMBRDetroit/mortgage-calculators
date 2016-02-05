@@ -10,4 +10,27 @@ var response = {
 		remainingInterest : 46103.21
 	}
 };
-
+var response2 = {
+  interestSaved: 0,
+  newMonthlyMortgage: {
+    monthlyMortgagePayment: 408.24,
+    newMortgageTotal: 100000,
+    remainingInterest: 46966.83
+  },
+  oldMonthlyMortgage: {
+    monthlyMortgagePayment: 0,
+    remainingInterest: 0
+  }
+}
+var response3 = {
+  interestSaved: 0,
+  newMonthlyMortgage: {
+    monthlyMortgagePayment: 408.24,
+    newMortgageTotal: 100000,
+    remainingInterest: 46966.83
+  },
+  oldMonthlyMortgage: {
+    monthlyMortgagePayment: Infinity,
+    remainingInterest: 0
+  }
+}

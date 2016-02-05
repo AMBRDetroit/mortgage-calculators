@@ -1,3 +1,28 @@
+/*
+*	To calculate the refinancing of a mortgage pass in the following arguments :
+*	var args = {
+*		loanAmount (number) : (number) 
+*		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
+*		paymentsMade (number) : (number) ,
+*		newInterestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		newTermInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
+*	}
+*	response : an object
+*	var response = {
+*		interestSaved : (number),
+*		oldMonthlyMortgage : {
+*			monthlyMortgagePayment : (number),
+*			remainingInterest : (number)
+*		},
+*		newMonthlyMortgage : {
+*			newMortgageTotal : (number),
+*			monthlyMortgagePayment : (number),
+*			remainingInterest : (number)
+*		}
+*	};
+*	
+*/
 window.mortgageCalculators.refinanceMortgage = function(args){
 	var args = validateInputArgs(args);
 	var loanAmount = args.loanAmount;

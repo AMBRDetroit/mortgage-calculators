@@ -1,3 +1,28 @@
+/*
+*	To calculate comparison between fixed rate mortgage and adjustable rate mortgage  pass in the following arguments :
+*	var args = {
+*		loanAmount (number) : the loan amount 
+*		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
+*		monthsBeforeFirstAdjustment (number) : (number) before starting adjustments
+*		monthsBetweenAdjustments (number) : (number) between each adjustments
+*		expectedAdjustmentRate (number) : (number) ( will be converted into monthly percentage in calculations)	
+*		initialInterestRate (number) : starting interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		maximumInterestRate (number) : max interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*	}
+*	
+*	response : an object
+*	var response = {
+*			fixedRate : {
+*			monthlyMortgagePayment : (number)
+*		},
+*		ARM : {
+*			initialMonthlyMortgagePayment : (number),
+*			maxMonthlyMortgagePayment : (number)
+*		}
+*	}
+*	
+*/
 window.mortgageCalculators.comparefixedRateVsARM = function(args){
 	var args = validateInputArgs(args);
 	

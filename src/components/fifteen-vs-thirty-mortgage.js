@@ -1,3 +1,25 @@
+/*
+*	To calculate a comparison between 15 year mortgage and 30 year mortgage  pass in the following arguments :
+*	var args = {
+*		loanAmount (number) : the loan amount 
+*		interestRate1 (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		interestRate1 (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*	}
+*
+*	response : an object
+*	var response = {
+*		fifteenyearMortgage : {
+*			monthlyMortgagePayment : (number),
+*			totalPayments : (number),
+*			totalInterest : (number)
+*		},
+*		thirtyyearMortgage : {
+*			monthlyMortgagePayment : (number),
+*			totalPayments : (number),
+*			totalInterest : (number)
+*		}
+*	}
+*/
 window.mortgageCalculators.compareFifteenVsThirtyYearMortgages = function(args){
 	var args = validateInputArgs(args);
 	var loanAmount = args.loanAmount;

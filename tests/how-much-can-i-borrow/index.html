@@ -24,6 +24,42 @@
 				//format result to decimal places of two
 				var result = mortgageCalculators.howMuchCanIBorrow(args);
 				assert.deepEqual(result, response , "+4000/month - 400/month with 5% down payment for 30 years @ 3.75%");
+				var args = {
+					interestRate : -3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0		
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.howMuchCanIBorrow(args);
+				assert.deepEqual(result, response2 , "negative interest rate");
+				var args = {
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : -30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0		
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.howMuchCanIBorrow(args);
+				assert.deepEqual(result, response2 , "negative term in years");
+				var args = {
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 1200,
+					yearlyPropertyInsurance : 1200		
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.howMuchCanIBorrow(args);
+				assert.deepEqual(result, response3 , "with yearly property tax and insurance");
 			});	
 		</script>
 	</head>

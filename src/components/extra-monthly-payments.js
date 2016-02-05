@@ -1,4 +1,34 @@
-// calculate monthly mortgage payments with extra monthly payments
+/*
+*	To calculate Monthly Mortgage Payments With Extra Monthly Payments  pass in the following arguments :
+*	var args = {
+*		loanAmount (number) : the loan amount 
+*		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		termInYears (number) : the term in years ( will be converted to number of monthly payments in calculations)
+*		extraPaymentAmount (number) : the amount to add to each monthly mortgage payment
+*	}
+*
+*	response : an object
+*	var response = {
+*		withExtraPayment : {
+*			totalMonthlyPayment :  (number),
+*			interestRate : (number),
+*			term : (number),
+*			totalCost : (number),
+*			payments : (array of objects) [{
+*	        	annualInterestPayment: (number),
+*	        	annualPrincipalPayment: (number),
+*	        	balance: (number),
+*	        	monthlyBreakdown: [(array of objects)]
+*	  		}]
+*		},
+*		withoutExtraPayment : {
+*			totalMonthlyPayment : (number),
+*			interestRate : (number),
+*			term : (number),
+*			totalCost : (number)
+*		}
+*	}
+*/
 window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments = function(args){
 	// validate the input arguments
 	var args = validateInputArgs(args);

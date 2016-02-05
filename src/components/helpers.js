@@ -11,7 +11,7 @@ function calculateMonthlyInterestPayment(monthlyInterestRate,remainingBalance){
 };
 
 /*  
- * Calculate monthly mortgage payments 
+* Calculate monthly mortgage payments 
 *	For a fixed rate Monthly Mortage:
 *	c - the montly mortgage payment
 *	r - the monthly interest rate, expressed as a decimal, not a percentage. Since the quoted yearly percentage rate is not a compounded rate, the monthly percentage rate is simply the yearly percentage rate divided by 12; dividing the monthly percentage rate by 100 gives r, the monthly rate expressed as a decimal.
