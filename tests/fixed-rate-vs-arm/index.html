@@ -66,8 +66,22 @@
 				}
 				//format result to decimal places of two
 				var result = mortgageCalculators.comparefixedRateVsARM(args);
-				console.log(result);
-				assert.deepEqual(result, 'undefined' , "negative term in years");	
+				assert.deepEqual(result, undefined , "negative term in years will return undefined, calculations will not run");
+
+				var args = {
+					loanAmount : 100000,
+					termInYears : 30,
+					interestRate : 6.5,
+					monthsBeforeFirstAdjustment : 36,
+					monthsBetweenAdjustments : -12,
+					expectedAdjustmentRate : 0.25,
+					initialInterestRate : 6.5,
+					maximumInterestRate : 12
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.comparefixedRateVsARM(args);
+				assert.deepEqual(result, undefined , "negative months between adjustments will return undefined, calculations will not run");
+	
 			});	
 		</script>
 	</head>

@@ -39,7 +39,7 @@
 					extraPaymentAmount : 300
 				}
 				//format result to decimal places of two
-				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
+				var result = window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
 				assert.deepEqual(result, response2 , " Loan amount is negative, don't calculate payment breakdowns");
 
 				var args = {
