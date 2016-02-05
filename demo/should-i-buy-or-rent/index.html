@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Should I Rent or Buy?r</title>
+		<link rel="stylesheet" href="../styles.css" type="text/css">
+		<script src="../../src/mortgage-calculators.js"></script>
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script>
+			$(function(){
+				var results;
+				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					var errors = [];
+					var args = $(this).serializeArray();
+					console.log(args);
+					$.each(args,function(i,arg){
+						if(isNaN(parseFloat(arg.value))){
+							errors.push("Please enter a number");
+						}else if( parseFloat(arg.value) < 0 ){
+							errors.push("Please a value greater than 0");
+						}else{
+							arg.value = parseFloat(arg.value);
+						}
+					});
+					if(errors.length > 0){
+						$('.errors').html('error');
+					}else{
+						$('.errors').html('');
+	
+						var args = {
+							monthlyRent : args[0].value,
+							expectedAnnualRentIncrease : args[1].value,
+							purchasePrice : args[2].value,
+							downPayment : args[3].value,
+							interestRate : args[4].value,
+							termInYears : args[5].value,
+							annualAppreciation : args[6].value,
+							howLongBeforeSelling : args[7].value,
+							currentAnnualInterest : args[8].value,
+							incomeTaxRate : args[9].value,
+							closingCosts : 0
+						}
+						results = mortgageCalculators.compareBuyVsRent(args);
+						console.log(results);
+						 $('.table-1__tbody').html('<tr><td>'+results.currentValueOfHome+'</td><td>'+results.totalOwedToBank+'</td><td>'+results.equityOnHome+'</td><td>'+results.savingWhenRenting+'</td><td>'+results.transactionalCosts+'</td><td>'+results.netCostOfOwnership+'</td><td>'+results.moneySavedByBuying+'</td></tr>');
+					}
+				});
+			});
+		
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<form class="form">
+				<div class="form__entry">
+					<label class="form__entry-label" >Monthly Rent</label>
+					<input type="text" class="form__entry-field" name="monthlyRent" id="monthlyRent" >
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Expected Annual Rent Increase(percentage)</label>
+					<input type="text" class="form__entry-field" name="expectedAnnualRentIncrease" id="expectedAnnualRentIncrease" >
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Purchase Price</label>
+					<input type="text" class="form__entry-field" name="purchasePrice" id="purchasePrice" >
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Down Payment (percentage)</label>
+					<input type="text" class="form__entry-field" name="downPayment" id="downPayment" >
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Interest Rate</label>
+					<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Term in Years</label>
+					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Annual Appreciation</label>
+					<input type="text" class="form__entry-field" name="annualAppreciation" id="annualAppreciation">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >How Long Before Selling (Years)</label>
+					<input type="text" class="form__entry-field" name="howLongBeforeSelling" id="howLongBeforeSelling">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Current Annual Interest (%)</label>
+					<input type="text" class="form__entry-field" name="currentAnnualInterest" id="currentAnnualInterest">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Income Tax(%)</label>
+					<input type="text" class="form__entry-field" name="incomeTaxRate" id="incomeTaxRate">
+				</div>
+				<button class="btn" type="submit">Calculate</button>
+			</form>
+			<div class="results">
+				<p class="errors"></p>
+				<h2>Rent Vs Buy</h2>
+				<table class="table-1">
+					<thead>
+						<tr>
+							<th> Current Value Of Home </th>
+							<th> Total Owed To Bank </th>
+							<th> Equity On Home </th>
+							<th> Saving When Renting </th>
+							<th> Transactional Costs </th>
+							<th> Net Cost Of Ownership </th>
+							<th> Money Saved By Buying </th>
+						</tr>
+					</thead>
+					<tbody class="table-1__tbody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

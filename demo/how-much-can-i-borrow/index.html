@@ -2,18 +2,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>How much can I afford Calculator</title>
+		<title>How much can I Borrow Calculator</title>
+		<link rel="stylesheet" href="../styles.css" type="text/css">
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="../../src/mortgageCalculator.js"></script>
-		<style>
-			body{margin:0;padding:0;font-size:16px;}
-			.container{width:80%;margin:0 auto;}
-			.form{background-color:#ccc;padding:50px;}
-			.form__entry{margin:10px 0;}
-			.form__entry-label{font-weight:bold; display:block;}
-			.form__entry-field{ padding:10px 0; border-radius:5px;}
-			.btn{background-color:#0053A0; padding:14px 20px;color:#FFF; border:transparent;border-radius:5px;font-size:1rem;}
-		</style>
+		<script src="../../src/mortgage-calculators.js"></script>
+		
 		
 	</head>
 	<body>
@@ -50,6 +43,7 @@
 				<button class="btn" type="submit">Calculate</button>
 			</form>
 			<div class="results">
+				<p class="errors"></p>
 				<h2>How Much Can I Afford?</h2>
 				<table class="table-1">
 					<thead>
@@ -99,8 +93,9 @@
 						}
 					});
 					if(errors.length > 0){
-						console.log(errors);
+						$('.errors').html('error');
 					}else{
+						$('.errors').html('');
 						var args = {
 							grossMonthlyIncome : args[0].value,
 							monthlyDebtPayment : args[1].value,
@@ -110,7 +105,7 @@
 							yearlyPropertyTax : args[5].value,
 							yearlyPropertyInsurance : args[6].value
 						}	
-						var results = mtgcalculator.howMuchCanIAfford(args);
+						var results = mortgageCalculators.howMuchCanIBorrow(args);
 						$('.js-loanAmount').html('<td>Loan Amount</td><td>'+results.conservative.loanAmount+'</td><td>'+results.aggressive.loanAmount+'</td>');
 						$('.js-downPayment').html('<td>Down Payment</td><td>'+results.conservative.downPayment+'</td><td>'+results.aggressive.downPayment+'</td>');
 						$('.js-priceOfHome').html('<td>Price of Home</td><td>'+results.conservative.priceOfHome+'</td><td>'+results.aggressive.priceOfHome+'</td>');

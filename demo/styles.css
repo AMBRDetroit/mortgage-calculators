@@ -1,0 +1,7 @@
+body{margin:0;padding:0;font-size:16px;}
+.container{width:80%;margin:0 auto;}
+.form{background-color:#ccc;padding:50px;}
+.form__entry{margin:10px 0;}
+.form__entry-label{font-weight:bold; display:block;}
+.form__entry-field{ padding:10px 0; border-radius:5px;}
+.btn{background-color:#0053A0; padding:14px 20px;color:#FFF; border:transparent;border-radius:5px;font-size:1rem;}

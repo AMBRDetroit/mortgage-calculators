@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Fixed Rate Vs Adjustable Rate Mortgage</title>
+		<link rel="stylesheet" href="../styles.css" type="text/css">
+		<script src="../../src/mortgage-calculators.js"></script>
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script>
+			$(function(){
+				var results;
+				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					var errors = [];
+					var args = $(this).serializeArray();
+					console.log(args);
+					$.each(args,function(i,arg){
+						if(isNaN(parseFloat(arg.value))){
+							errors.push("Please enter a number");
+						}else if( parseFloat(arg.value) < 0 ){
+							errors.push("Please a value greater than 0");
+						}else{
+							arg.value = parseFloat(arg.value);
+						}
+					});
+					if(errors.length > 0){
+						$('.errors').html('error');
+					}else{
+						$('.errors').html('');
+	
+						var args = {
+							loanAmount : args[0].value,
+							interestRate : args[1].value,
+							termInYears : args[2].value,
+							monthsBeforeFirstAdjustment : args[3].value,
+							monthsBetweenAdjustments : args[4].value,
+							expectedAdjustmentRate : args[5].value,
+							initialInterestRate : args[6].value,
+							maximumInterestRate : args[7].value
+						}
+						results = mortgageCalculators.comparefixedRateVsARM(args);
+						console.log(results);
+						 $('.table-1__tbody').html('<tr><td>'+results.fixedRate.monthlyMortgagePayment+'</td></tr>');
+						 $('.table-2__tbody').html('<tr><td>'+results.ARM.initialMonthlyMortgagePayment+'</td><td>'+results.ARM.maxMonthlyMortgagePayment+'</td></tr>');
+					}
+				});
+			});
+		
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<form class="form">
+				<div class="form__entry">
+					<label class="form__entry-label" >Loan Amount</label>
+					<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Interest Rate</label>
+					<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Term in Years</label>
+					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" > Months Before First Adjustment </label>
+					<input type="text" class="form__entry-field" name="monthsBeforeFirstAdjustment" id="monthsBeforeFirstAdjustment">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" > Months Between Adjustments </label>
+					<input type="text" class="form__entry-field" name="monthsBetweenAdjustments" id="monthsBetweenAdjustments">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Expected Adjustment Rate</label>
+					<input type="text" class="form__entry-field" name="expectedAdjustmentRate" id="expectedAdjustmentRate">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Initial Interest Rate</label>
+					<input type="text" class="form__entry-field" name="initialInterestRate" id="initialInterestRate">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Maximum Interest Rate</label>
+					<input type="text" class="form__entry-field" name="maximumInterestRate" id="maximumInterestRate">
+				</div>
+				<button class="btn" type="submit">Calculate</button>
+			</form>
+			<div class="results">
+				<p class="errors"></p>
+				<h2>Fixed Rate Mortgage</h2>
+				<table class="table-1">
+					<thead>
+						<tr>
+							<th> Monthly Mortgage Payment </th>
+						</tr>
+					</thead>
+					<tbody class="table-1__tbody">
+					</tbody>
+				</table>
+				<h2>Adjustable Rate Mortgage</h2>
+				<table class="table-2">
+					<thead>
+						<tr>
+							<th> Initial Monthly Mortgage Payment </th>
+							<th> Max Monthly Mortgage Payment </th>
+						</tr>
+					</thead>
+					<tbody class="table-2__tbody">
+					</tbody>
+				</table>
+				<p class="savings"></p>
+			</div>
+		</div>
+	</body>
+</html>

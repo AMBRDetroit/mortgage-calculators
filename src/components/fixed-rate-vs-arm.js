@@ -34,9 +34,13 @@ window.mortgageCalculators.comparefixedRateVsARM = function(args){
 	var monthsBeforeFirstAdjustment = args.monthsBeforeFirstAdjustment;
 	var monthsBetweenAdjustments = args.monthsBetweenAdjustments;
 	var maximumInterestRate = args.maximumInterestRate;
-	// if term in years and months beweent adjustment need to be greater than 0 for these loops to work, otherwise will cause infinite loop
-	if(termInYears > 0 && monthsBetweenAdjustments > 0){
-			var fixedMonthlyMortgagePayment = calculateMonthlyMortgagePayment({
+	// if term in years || month between adjustments will cause infinite loop
+	if(termInYears <= 0) {
+		return { error : "<termInYears> must be greater than 0." };
+	} else if(monthsBetweenAdjustments <= 0) {
+		return { error : "<monthsBetweenAdjustment> must be greater than 0." };
+	} else {
+		var fixedMonthlyMortgagePayment = calculateMonthlyMortgagePayment({
 			loanAmount : loanAmount,
 			interestRate : fixedInterestRate,
 			termInYears : termInYears

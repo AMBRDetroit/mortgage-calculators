@@ -3,10 +3,44 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Monthly Mortgage Calculator</title>
-		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="../../src/mortgageCalculator.js"></script>
 		<link rel="stylesheet" href="../styles.css" type="text/css" >
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
+		<script>
+			$(function(){
+				
+				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					var errors = [];
+					var args = $(this).serializeArray();
+					
+					$.each(args,function(i,arg){
+						if(isNaN(parseFloat(arg.value))){
+							errors.push("Please enter a number");
+						}else if( parseFloat(arg.value) < 1 ){
+							errors.push("Please a value greater than 0");
+						}else{
+							arg.value = parseFloat(arg.value);
+						}
+					});
+					if(errors.length > 0){
+						$('.errors').html('error');
+					}else{
+						$('.errors').html('');
+						var args = {
+							loanAmount : args[0].value,
+							interestRate : args[1].value,
+							termInYears : args[2].value	
+						}
+						
+						var results = mortgageCalculator.monthlyMortgagePayments(args);
+						$('.results').html('<p> Monthly mortgage payments of ' + results + '</p>')
+					}
+	
+				});
+			});
 		
+		</script>
 	</head>
 	<body>
 		<div class="container">
@@ -30,40 +64,5 @@
 				
 			</div>
 		</div>
-		<script>
-			$(function(){
-				
-				$('body').on('submit','form',{},function(e){
-					e.preventDefault();	
-					var errors = [];
-					var args = $(this).serializeArray();
-					
-					$.each(args,function(i,arg){
-						if(isNaN(parseFloat(arg.value))){
-							errors.push("Please enter a number");
-						}else if( parseFloat(arg.value) < 1 ){
-							errors.push("Please a value greater than 0");
-						}else{
-							arg.value = parseFloat(arg.value);
-						}
-					});
-					if(errors.length > 0){
-						$('.errors').html('error');
-					}else{
-						$('.errors').html('');
-						var args = {
-							loanAmount = args[0].value;
-							interestRate = args[1].value;
-							termInYears = args[2].value;	
-						}
-						
-						var results = mortgageCalculator.monthlyMortgagePayments(args);
-						$('.results').html('<p> Monthly mortgage payments of ' + results + '</p>')
-					}
-	
-				});
-			});
-		
-		</script>
 	</body>
 </html>

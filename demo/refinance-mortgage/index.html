@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Refinance Mortgage</title>
+		<link rel="stylesheet" href="../styles.css" type="text/css">
+		<script src="../../src/mortgage-calculators.js"></script>
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script>
+			$(function(){
+				var results;
+				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					var errors = [];
+					var args = $(this).serializeArray();
+					console.log(args);
+					$.each(args,function(i,arg){
+						if(isNaN(parseFloat(arg.value))){
+							errors.push("Please enter a number");
+						}else if( parseFloat(arg.value) < 0 ){
+							errors.push("Please a value greater than 0");
+						}else{
+							arg.value = parseFloat(arg.value);
+						}
+					});
+					if(errors.length > 0){
+						$('.errors').html('error');
+					}else{
+						$('.errors').html('');
+	
+						var args = {
+							loanAmount : args[0].value,
+							interestRate : args[1].value,
+							termInYears : args[2].value,
+							paymentsMade : args[3].value,
+							newInterestRate : args[4].value,
+							newTermInYears : args[5].value
+						}
+						results = mortgageCalculators.refinanceMortgage(args);
+						console.log(results);
+						 $('.table-1__tbody').html('<tr><td>'+results.oldMonthlyMortgage.monthlyMortgagePayment+'</td><td>'+results.oldMonthlyMortgage.remainingInterest+'</td></tr>');
+						 $('.table-2__tbody').html('<tr><td>'+results.newMonthlyMortgage.newMortgageTotal+'</td><td>'+results.newMonthlyMortgage.monthlyMortgagePayment+'</td><td>'+results.newMonthlyMortgage.remainingInterest+'</td></tr>');
+						 $('.savings').html(results.interestSaved);
+					}
+				});
+			});
+		
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<form class="form">
+				<div class="form__entry">
+					<label class="form__entry-label" >Loan Amount</label>
+					<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Interest Rate</label>
+					<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Term in Years</label>
+					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >Payments Made</label>
+					<input type="text" class="form__entry-field" name="paymentsMade" id="paymentsMade">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" > New Interest Rate</label>
+					<input type="text" class="form__entry-field" name="newInterestRate" id="newInterestRate">
+				</div>
+				<div class="form__entry">
+					<label class="form__entry-label" >New Term in Years</label>
+					<input type="text" class="form__entry-field" name="newTermInYears" id="newTermInYears">
+				</div>
+				<button class="btn" type="submit">Calculate</button>
+			</form>
+			<div class="results">
+				<p class="errors"></p>
+				<h2>Old Mortgage</h2>
+				<table class="table-1">
+					<thead>
+						<tr>
+							<th> Monthly Mortgage Payment </th>
+							<th> Remaining Interest </th>
+						</tr>
+					</thead>
+					<tbody class="table-1__tbody">
+					</tbody>
+				</table>
+				<h2>New Mortgage</h2>
+				<table class="table-2">
+					<thead>
+						<tr>
+							<th> New Monthly Mortgage Total </th>
+							<th> Monthly Mortgage Payment </th>
+							<th> Remaining Interest </th>
+						</tr>
+					</thead>
+					<tbody class="table-2__tbody">
+					</tbody>
+				</table>
+				<p class="savings"></p>
+			</div>
+		</div>
+	</body>
+</html>

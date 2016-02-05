@@ -12,7 +12,7 @@
 *	}
 *	response : an object
 *	var response = {
-*		icurrentValueOfHome : (number),
+*		currentValueOfHome : (number),
 *		totalOwedToBank : (number),
 *		equityOnHome : (number),
 *		savingWhenRenting : (number),
