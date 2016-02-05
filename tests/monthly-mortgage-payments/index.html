@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.20.0.css">
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
-		<script src="../../src/mortgageCalculators.js"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
 			// Calculate Monthly Mortgage Payments
 			QUnit.test("Monthly Mortgage Payments", function(assert) {
@@ -17,25 +17,43 @@
 				}
 				//format result to decimal places of two
 				var result = mortgageCalculators.monthlyMortgagePayments(args);
-				assert.deepEqual(result, 463.12 , "100,000 @ 3.75% for 30 years ");
-				
+				assert.deepEqual(result, 463.12 , "100,000 @ 3.75% for 30 years ");	
 				var args = {
 					loanAmount : "100000",
 					interestRate : "3.75 dafsdafsaf",
 					termInYears : "30"
 				}
 				var result = mortgageCalculators.monthlyMortgagePayments(args);
-			
-				assert.deepEqual(result, 463.12, "100,000 @ 3.75% for 30 years ");
-				
+				assert.deepEqual(result, 463.12, "Convert all input strings to numbers before calculating");	
 				var args = {
-					loanAmount : 200000,
-					interestRate : 6.75,
-					termInYears : 5
+					loanAmount : 0,
+					interestRate : 0,
+					termInYears : 0
 				}
-				var result = mortgageCalculators.monthlyMortgagePayments(args);
-			
-				assert.deepEqual(result, 3936.69, "200,000 @ 6.75% for 5 years ");
+				var result = mortgageCalculators.monthlyMortgagePayments(args);			
+				assert.deepEqual(result, 0, "When all inputs are set to 0, return 0");
+				var args = {
+					loanAmount : -1000,
+					interestRate : -6,
+					termInYears : -30
+				}
+				var result = mortgageCalculators.monthlyMortgagePayments(args);			
+				assert.deepEqual(result, 0, "When all inputs are set to 0, return 0");
+				var args = {
+					loanAmount : 1000000,
+					interestRate : 6,
+					termInYears : -30
+				}
+				var result = mortgageCalculators.monthlyMortgagePayments(args);			
+				assert.deepEqual(result, Infinity, "When loan amount and interest rate are positive but term in years is set to negative return infinity");
+				var args = {
+					loanAmount : -1000000,
+					interestRate : 6,
+					termInYears : 30
+				}
+				var result = mortgageCalculators.monthlyMortgagePayments(args);			
+				console.log(result);
+				assert.deepEqual(result, 0, "When loan amount is positive but interest rate and term in years is set to negative return 0");
 			});	
 		</script>
 	</head>

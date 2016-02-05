@@ -7,7 +7,7 @@
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgageCalculators.js"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
 			// Calculate Monthly Mortgage Payments
 			QUnit.dump.maxDepth = 6;
@@ -21,6 +21,46 @@
 				//format result to decimal places of two
 				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
 				assert.deepEqual(result, response , "200,000 @ 6.75% for 5 years ");
+				
+				var args = {
+					loanAmount : "200000",
+					interestRate : "6.75",
+					termInYears : "5",
+					extraPaymentAmount : "300"
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
+				assert.deepEqual(result, response , "Convert inputs into numbers before calculating ");
+				
+				var args = {
+					loanAmount : -200000,
+					interestRate : 6.75,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
+				assert.deepEqual(result, response2 , " Loan amount is negative, don't calculate payment breakdowns");
+
+				var args = {
+					loanAmount : 200000,
+					interestRate : -6.75,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
+				assert.deepEqual(result, response3 , " interest rate is negative, don't calculate payment breakdowns");
+				
+				var args = {
+					loanAmount : 200000,
+					interestRate : 6.75,
+					termInYears : -5,
+					extraPaymentAmount : 300
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
+				assert.deepEqual(result, response4 , " term in years is negative, don't calculate payment breakdowns");
 			});	
 		</script>
 	</head>

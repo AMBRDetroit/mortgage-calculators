@@ -317,67 +317,67 @@ var response = {
 };
 
 
-var extraPaymentResponse2 = {
-	withExtraPayments : [{ 
-		annualPrincipalPayment : 38517.43,
-		annualInterestPayment : 12322.85,
-		balance : 161482.50,
-		monthlyBreakdown : []
+var response2 = {
+	withExtraPayment : {
+		totalMonthlyPayment :  300,
+		interestRate : 6.75,
+		term : 5,
+		totalCost : 0,
+		payments : [{
+	        annualInterestPayment: 0,
+	        annualPrincipalPayment: 0,
+	        balance: 0,
+	        monthlyBreakdown: []
+	  }]
 	},
-	{ 
-		annualPrincipalPayment : 41199.31,
-		annualInterestPayment : 9640.97,
-		balance : 120283.30,
-		monthlyBreakdown : []
+	withoutExtraPayment : {
+		totalMonthlyPayment : 0,
+		interestRate : 6.75,
+		term : 5,
+		totalCost : 0
+	}
+}
+
+var response3 = {
+	withExtraPayment : {
+		totalMonthlyPayment :  0,
+		interestRate : 0,
+		term : 5,
+		totalCost : 0,
+		payments : [{
+	        annualInterestPayment: 0,
+	        annualPrincipalPayment: 0,
+	        balance: 200000,
+	        monthlyBreakdown: []
+	  }]
 	},
-	{ 
-		annualPrincipalPayment : 44067.95,
-		annualInterestPayment : 6772.33,
-		balance : 76215.31,
-		monthlyBreakdown : []
+	withoutExtraPayment : {
+		totalMonthlyPayment : 0,
+		interestRate : 0,
+		term : 5,
+		totalCost : 0
+	}
+}
+
+var response4 = {
+	withExtraPayment : {
+		totalMonthlyPayment :  Infinity,
+		interestRate : 6.75,
+		term : 0,
+		totalCost : 0,
+		payments : [{
+	        annualInterestPayment: 0,
+	        annualPrincipalPayment: 0,
+	        balance: 200000,
+	        monthlyBreakdown: []
+	  }]
 	},
-	{ 
-		annualPrincipalPayment : 47136.30,
-		annualInterestPayment : 3703.98,
-		balance : 29079.01,
-		monthlyBreakdown : []
-	},
-	{ 
-		annualPrincipalPayment : 29079.01,
-		annualInterestPayment : 659.78,
-		balance : 0,
-		monthlyBreakdown : []
-	}]/*,
-	withoutExtraPayments : [{ 
-		annualPrincipalPayment : 38,517.43,
-		annualInterestPayment : 12,322.85,
-		balance : 161,482.50,
-		monthlyBreakdown : []
-	},
-	{ 
-		annualPrincipalPayment : 41,199.31,
-		annualInterestPayment : 9,640.97,
-		balance : 120,283.30,
-		monthlyBreakdown : []
-	},
-	{ 
-		annualPrincipalPayment : 44,067.95,
-		annualInterestPayment : 6,772.33,
-		balance : 76,215.31,
-		monthlyBreakdown : []
-	},
-	{ 
-		annualPrincipalPayment : 47,136.30,
-		annualInterestPayment : 3,703.98,
-		balance : 29,079.01,
-		monthlyBreakdown : []
-	},
-	{ 
-		annualPrincipalPayment : 29,079.01,
-		annualInterestPayment : 659.78,
-		balance : 0,
-		monthlyBreakdown : []
-	}]*/
+	withoutExtraPayment : {
+		totalMonthlyPayment : Infinity,
+		interestRate : 6.75,
+		term : 0,
+		totalCost : 0
+	}
 }
 
 

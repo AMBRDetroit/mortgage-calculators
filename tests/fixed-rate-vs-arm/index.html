@@ -7,7 +7,7 @@
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgageCalculators.js"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
 			// Calculate Monthly Mortgage Payments
 			QUnit.dump.maxDepth = 6;
@@ -25,6 +25,49 @@
 				//format result to decimal places of two
 				var result = mortgageCalculators.comparefixedRateVsARM(args);
 				assert.deepEqual(result, response , "100,000 @ 3.75 for 30 years vs 100,000 @ 2.75 for 30 years after 12 payments");
+				
+				var args = {
+					loanAmount : "100000",
+					termInYears : "30",
+					interestRate : "6.5",
+					monthsBeforeFirstAdjustment : "36",
+					monthsBetweenAdjustments : "12",
+					expectedAdjustmentRate : "0.25",
+					initialInterestRate : "6.5",
+					maximumInterestRate : "12"
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.comparefixedRateVsARM(args);
+				assert.deepEqual(result, response , "convert all inputs to numbers before calculating");
+				
+				var args = {
+					loanAmount : -100000,
+					termInYears : 30,
+					interestRate : 6.5,
+					monthsBeforeFirstAdjustment : 36,
+					monthsBetweenAdjustments : 12,
+					expectedAdjustmentRate : 0.25,
+					initialInterestRate : 6.5,
+					maximumInterestRate : 12
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.comparefixedRateVsARM(args);
+				assert.deepEqual(result, response2 , "negative loan amount returns 0");
+				
+				var args = {
+					loanAmount : 100000,
+					termInYears : -30,
+					interestRate : 6.5,
+					monthsBeforeFirstAdjustment : 36,
+					monthsBetweenAdjustments : 12,
+					expectedAdjustmentRate : 0.25,
+					initialInterestRate : 6.5,
+					maximumInterestRate : 12
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.comparefixedRateVsARM(args);
+				console.log(result);
+				assert.deepEqual(result, 'undefined' , "negative term in years");	
 			});	
 		</script>
 	</head>

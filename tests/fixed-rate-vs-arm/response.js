@@ -7,3 +7,12 @@ var response = {
 			maxMonthlyMortgagePayment : 889.32
 		}
 }
+var response2 = {
+		fixedRate : {
+			monthlyMortgagePayment : 0
+		},
+		ARM : {
+			initialMonthlyMortgagePayment : 0,
+			maxMonthlyMortgagePayment : 0
+		}
+}

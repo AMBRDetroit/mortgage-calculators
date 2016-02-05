@@ -7,7 +7,7 @@
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgageCalculators.js"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
 			// Calculate Monthly Mortgage Payments
 			QUnit.dump.maxDepth = 6;
@@ -17,9 +17,46 @@
 					interestRate1 : 3.25,
 					interestRate2 : 3.75
 				}
+				
 				//format result to decimal places of two
 				var result = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
 				assert.deepEqual(result, response , "100,000 @ 3.25 for 15 years VS. 100,000 @ 3.75 for 30 years");
+				
+				var args = {
+					loanAmount : "100000",
+					interestRate1 : "3.25",
+					interestRate2 : "3.75"
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);	
+				assert.deepEqual(result, response , "Convert inputs to numbers before calculating");
+				
+				var args = {
+					loanAmount : 100000,
+					interestRate1 : -3.25,
+					interestRate2 : 3.75
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
+				assert.deepEqual(result, response2 , "negative interest rate will return 0's for 15 year mortgage"); 
+				
+				var args = {
+					loanAmount : 100000,
+					interestRate1 : 3.25,
+					interestRate2 : -3.75
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
+				assert.deepEqual(result, response3 , "negative interest rate will return 0's for 30 year mortgage"); 
+				
+				var args = {
+					loanAmount : -100000,
+					interestRate1 : 3.25,
+					interestRate2 : 3.75
+				}
+				//format result to decimal places of two
+				var result = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
+				assert.deepEqual(result, response4 , "negative loan amount will return 0's"); 
 			});	
 		</script>
 	</head>

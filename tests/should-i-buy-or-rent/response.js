@@ -7,4 +7,12 @@ var response = {
 	netCostOfOwnership : 94675.59,
 	moneySavedByBuying : 102317.61
 };
-
+var response2 = {
+	currentValueOfHome : 0,
+	totalOwedToBank : 0,
+	equityOnHome : 0,
+	savingWhenRenting : -124743.43,
+	transactionalCosts : 0,
+	netCostOfOwnership : 0,
+	moneySavedByBuying : 124743.43
+};

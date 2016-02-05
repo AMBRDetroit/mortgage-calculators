@@ -1,7 +1,7 @@
 function validateInputArgs(args){
 	for(var key in args){
 		// if input value is not a number, set it to 0, else return the value as a number
-		args[key] = isNaN(parseFloat(args[key])) ? 0 : parseFloat(args[key]);
+		args[key] = isNaN(parseFloat(args[key])) ? 0 : ( ( parseFloat(args[key]) < 0 ? 0 : parseFloat(args[key]) ) );
 	}
 	return args;
 };
