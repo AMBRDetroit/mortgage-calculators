@@ -314,12 +314,12 @@ window.mortgageCalculators.compareFifteenVsThirtyYearMortgages = function(args){
 	});
 	
 	var response = {
-		fifteenyearMortgage : {
+		fifteenYearMortgage : {
 			monthlyMortgagePayment : formatResult(monthlyMortgagePayments1),
 			totalInterest :  formatResult((monthlyMortgagePayments1 * 15 * 12) - loanAmount),
 			totalPayments :  formatResult(monthlyMortgagePayments1 * 15 * 12)
 		},
-		thirtyyearMortgage : {
+		thirtyYearMortgage : {
 			monthlyMortgagePayment : formatResult(monthlyMortgagePayments2),
 			totalInterest :  formatResult((monthlyMortgagePayments2 * 30 * 12) - loanAmount),
 			totalPayments : formatResult(monthlyMortgagePayments2 * 30 * 12)
