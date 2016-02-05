@@ -18,6 +18,16 @@
 			QUnit.module('Input Validation');
 			// TODO
 			
+/*			
+* != neg, 0 ok grossMonthlyIncome (number) : (number) 
+*		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
+* != neg, 0 ok		downPayment (number) : (number)  ( will be converted into monthly percentage in calculations)	
+* != neg, != 0		monthsBetweenAdjustments (number) : (number) between each adjustments,
+* != neg, 0 ok		yearlyPropertyTax (number) : (will be converted to monthly value in calculations)
+* != neg, 0 ok		yearlyPropertyInsurance (number) : (will be converted to monthly value in calculations)	
+*/
+
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("How Much Can I Borrow?", function(assert) {

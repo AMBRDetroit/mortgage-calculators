@@ -308,7 +308,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error, undefined, "Can be 0");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
