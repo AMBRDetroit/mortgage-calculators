@@ -69,7 +69,7 @@ mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 		interestRate : 6.75,
 		term : 5,
 		totalCost : 236201.53
-}
+	}
 }
  ```
 ### 15 Year VS 30 Year Mortgage
