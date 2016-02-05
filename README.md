@@ -20,7 +20,8 @@ This library contains 7 different modules used for different
   7. Should I Buy or Rent a home?
 
 ### Monthly Mortgage Payment
-#### Description:
+#### Description: 
+This module calculates the monthly mortgage payment based on the loan amount, annual interest rate, and the term in years. 
 #### Usage:
  ```javascript
 mortgageCalculators.monthlyMortgagePayments({
@@ -33,8 +34,9 @@ mortgageCalculators.monthlyMortgagePayments({
 ```javascript
 Returns 463.12;
  ```
-  
 ### Monthly Mortgage Payment With Extra Monthly Payments
+#### Description : 
+This module calculates the monthly monthly payment from above with an extra monthly payment amount. It returns an object with annual and monthly breakdowns. 
 #### Usage:
 ```javascript
 mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
@@ -73,8 +75,8 @@ mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 }
  ```
 ### 15 Year VS 30 Year Mortgage
-#### Description:
-
+#### Description: 
+This module calculates the comparison of a 15-year mortgage with a 30-year mortgage based on the loan amount, and the interest rate of the respective year. 
 #### Usage:
 ```javascript
 mortgageCalculators.compareFifteenVsThirtyYearMortgages({
@@ -99,7 +101,8 @@ mortgageCalculators.compareFifteenVsThirtyYearMortgages({
 }
  ```
 ### How Much Can I Borrow?
-#### Description:
+#### Description: 
+This module calculates how much you could be expected to borrow from a lender based on various parameters. It returns an aggressive and conservative break down using commonly used debt-to-payment ratios.
 #### Usage:
 ```javascript
 mortgageCalculators.howMuchCanIBorrow({
@@ -140,7 +143,8 @@ mortgageCalculators.howMuchCanIBorrow({
 }
 ```
 ### Fixed Rate VS ARM
-#### Description:
+#### Description: 
+This module calculates the comparison between a fixed rate mortgage and an adjustable rate mortgage based on various parameters. 
 #### Usage:
 ```javascript
 mortgageCalculators.comparefixedRateVsARM({
@@ -167,7 +171,8 @@ mortgageCalculators.comparefixedRateVsARM({
 }
 ```
 ### Refinance Mortgage
-#### Description:
+#### Description: 
+This module calculates new values for a new monthly mortgage after an _n_ number of payments are already made. Returns an object with old and new mortgage values and the interest potentially saved by refinancing.
 #### Usage:
 ```javascript
 mortgageCalculators.refinanceMortgage({
@@ -195,7 +200,8 @@ mortgageCalculators.refinanceMortgage({
 }
 ```
 ### Should I Buy or Rent a Home?
-#### Description:
+#### Description: 
+This module calculates the potential benefits of buying a home as opposed to renting a home based on various given parameters. Returns a break down of the various costs of both buying vs renting, and a final value of money saved by buying. This final value may be negative to indicate a benefit of renting rather than buying.
 ### Usage:
 ```javascript
 mortgageCalculators.compareBuyVsRent({
