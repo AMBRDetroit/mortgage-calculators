@@ -139,3 +139,30 @@ mortgageCalculators.howMuchCanIBorrow({
   }
 }
 ```
+### Fixed Rate VS ARM
+#### Description:
+#### Usage:
+```javascript
+mortgageCalculators.comparefixedRateVsARM({
+	loanAmount : 100000,
+	termInYears : 30,
+	interestRate : 6.5,
+	monthsBeforeFirstAdjustment : 36,
+	monthsBetweenAdjustments : 12,
+	expectedAdjustmentRate : 0.25,
+	initialInterestRate : 6.5,
+	maximumInterestRate : 12
+});
+```
+#### Response:
+```javascript
+ {
+	fixedRate : {
+		monthlyMortgagePayment : 632.07
+	},
+	ARM : {
+		initialMonthlyMortgagePayment : 632.07,
+		maxMonthlyMortgagePayment : 889.32
+	}
+}
+```
