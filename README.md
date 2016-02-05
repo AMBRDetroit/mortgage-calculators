@@ -31,7 +31,7 @@ mortgageCalculators.monthlyMortgagePayments({
 ```
 #### Response:
 ```javascript
-	  Returns 463.12;
+Returns 463.12;
  ```
   
 ### Monthly Mortgage Payment With Extra Monthly Payments
