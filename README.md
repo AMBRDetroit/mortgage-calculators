@@ -45,29 +45,53 @@ Input Arguments:
 	mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
 	
 Returns (object)
-    var response = {
-    	withExtraPayment : {
-    		totalMonthlyPayment : 4236.69,
-    		interestRate : 6.75,
-    		term : 5,
-    		totalCost : 233018.07,
-    		payments : [{ // Array of Annual Break Down
-    	        annualInterestPayment: 12322.85,
-    	        annualPrincipalPayment: 38517.47,
-    	        balance: 161482.53,
-    	        monthlyBreakdown: [{ // Array of monthly breakdowns
-        				monthlyPayment : 4236.69,
-        				principalPayment :  3111.69,
-        				interestPayment :  1125,
-        				balance :  196888.31
-        			}...]
-    	  }...]
-    	},
-    	withoutExtraPayment : {
-    		totalMonthlyPayment : 3936.69,
-    		interestRate : 6.75,
-    		term : 5,
-    		totalCost : 236201.53
-    	}
-    }
+	 var response = {
+	    	withExtraPayment : {
+	    		totalMonthlyPayment : 4236.69,
+	    		interestRate : 6.75,
+	    		term : 5,
+	    		totalCost : 233018.07,
+	    		payments : [{ // Array of Annual Break Down
+	    	        annualInterestPayment: 12322.85,
+	    	        annualPrincipalPayment: 38517.47,
+	    	        balance: 161482.53,
+	    	        monthlyBreakdown: [{ // Array of monthly breakdowns
+	        				monthlyPayment : 4236.69,
+	        				principalPayment :  3111.69,
+	        				interestPayment :  1125,
+	        				balance :  196888.31
+	        			}...]
+	    	  }...]
+	    	},
+	    	withoutExtraPayment : {
+	    		totalMonthlyPayment : 3936.69,
+	    		interestRate : 6.75,
+	    		term : 5,
+	    		totalCost : 236201.53
+	    	}
+	    }
+ ```
+### 15 Year VS 30 Year Mortgage
+```javascript
+Input Arguments:
+	var args = {
+		loanAmount : 100000,
+		interestRate1 : 3.25,
+		interestRate2 : 3.75
+	}
+	mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
+	
+Returns (object)
+    	var response = {
+		fifteenYearMortgage : {
+			monthlyMortgagePayment : 702.67,
+			totalPayments : 126480.38,
+			totalInterest : 26480.38
+		},
+		thirtyYearMortgage : {
+			monthlyMortgagePayment : 463.12,
+			totalPayments : 166721.61,
+			totalInterest : 66721.61
+		}
+	}
  ```
