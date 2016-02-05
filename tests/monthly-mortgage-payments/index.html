@@ -8,6 +8,10 @@
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
+		
+			QUnit.config.reorder = false;
+			QUnit.dump.maxDepth = 6;
+		
 			// Calculate Monthly Mortgage Payments
 			QUnit.test("Monthly Mortgage Payments", function(assert) {
 				var args = {

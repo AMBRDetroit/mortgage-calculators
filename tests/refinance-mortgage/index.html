@@ -9,8 +9,10 @@
 		<script src="response.js"></script>
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
-			// Calculate Monthly Mortgage Payments
+			
+			QUnit.config.reorder = false;
 			QUnit.dump.maxDepth = 6;
+		
 			QUnit.test("Refinance Mortgage", function(assert) {
 				var args = {
 					interestRate : 3.75,
