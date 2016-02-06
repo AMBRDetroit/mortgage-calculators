@@ -211,10 +211,10 @@ mortgageCalculators.compareBuyVsRent({
 	downPayment : 5,
 	interestRate : 6,
 	termInYears : 30,
-	closingCosts : 0,
+	closingCosts : 1.5,
 	annualAppreciation : 3,
 	howLongBeforeSelling : 10,
-	currentAnnualInterest : 0,
+	currentAnnualInterestOnDownPayment : 3,
 	incomeTaxRate : 28
 });
 ```
