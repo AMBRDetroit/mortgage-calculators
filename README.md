@@ -35,7 +35,7 @@ mortgageCalculators.monthlyMortgagePayments({
 Returns 463.12;
  ```
 ### Monthly Mortgage Payment With Extra Monthly Payments
-#### Description : 
+#### Description: 
 This module calculates the monthly monthly payment from above with an extra monthly payment amount. It returns an object with annual and monthly breakdowns. 
 #### Usage:
 ```javascript
@@ -211,22 +211,21 @@ mortgageCalculators.compareBuyVsRent({
 	downPayment : 5,
 	interestRate : 6,
 	termInYears : 30,
-	closingCosts : 0,
+	closingCosts : 1.5,
 	annualAppreciation : 3,
 	howLongBeforeSelling : 10,
-	currentAnnualInterest : 0,
+	currentAnnualInterestOnDownPayment : 3,
 	incomeTaxRate : 28
 });
 ```
 #### Response:
 ```javascript
 {
-	currentValueOfHome : 269870.71,
-	totalOwedToBank : 159002.88,
-	equityOnHome : 110867.83,
-	savingWhenRenting : -7642.02,
-	transactionalCosts : 16192.24,
-	netCostOfOwnership : 94675.59,
-	moneySavedByBuying : 102317.61
+	currentValueOfHome: 268783.28,
+	totalOwedToBank: 167371.45,
+	equityOnHome: 101411.83,
+	netCostOfBuying: 11326.5,
+	netCostOfRenting: 120747.77,
+	benefitOfBuying: 109421.27
 }
 ```

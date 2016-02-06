@@ -16,7 +16,16 @@
 			// validate the inputs
 			QUnit.module('Input Validation');
 			// TODO
-			
+/*		
+* != neg, != 0 monthlyRent (number) : (number) 
+*	!= neg, != 0	purchasePrice (number) : (number)
+*	!= neg, 0 ok	downPayment (number) :  (number) ( will be converted into monthly percentage in calculations)
+*		interestRate (number) : interest rate as an annual percentage ( will be converted into  percentage in calculations)	
+*		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
+*	!= neg, != 0	howLongBeforeSelling (number) : (number) ,
+*	!= neg 0 ok	currentAnnualInterest (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*	!= neg 0 ok	incomeTaxRate (number) :  ( will be converted into percentage in calculations)	
+	*/		
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("Rent Vs Own", function(assert) {
