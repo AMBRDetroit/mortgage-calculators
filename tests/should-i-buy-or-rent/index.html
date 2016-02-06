@@ -2,12 +2,12 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Fixed vs ARM</title>
+		<title>Rent Vs Buy</title>
 		<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.20.0.css">
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgage-calculators.js"></script>
+		<script src="../../src/mortgage-calculators.php"></script>
 		<script>
 		
 			QUnit.config.reorder = false;
@@ -27,31 +27,15 @@
 					downPayment : 5,
 					interestRate : 6,
 					termInYears : 30,
-					closingCosts : 0,
+					closingCosts : 1.5,
 					annualAppreciation : 3,
 					howLongBeforeSelling : 10,
-					currentAnnualInterest : 0,
+					currentAnnualInterestOnDownPayment : 3,
 					incomeTaxRate : 28
 				}
 				//format result to decimal places of two
 				var result = mortgageCalculators.compareBuyVsRent(args);
 				assert.deepEqual(result, response , "");
-				var args = {
-					monthlyRent : 800,
-					expectedAnnualRentIncrease : 5,
-					purchasePrice : -200000,
-					downPayment : 5,
-					interestRate : 6,
-					termInYears : 30,
-					closingCosts : 0,
-					annualAppreciation : 3,
-					howLongBeforeSelling : 10,
-					currentAnnualInterest : 0,
-					incomeTaxRate : 28
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.compareBuyVsRent(args);
-				assert.deepEqual(result, response2 , "with negative purchase price, returns some values as 0");
 			});	
 		</script>
 	</head>

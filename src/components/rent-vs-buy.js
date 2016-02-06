@@ -42,28 +42,33 @@ window.mortgageCalculators.compareBuyVsRent = function(args){
 	// initialize home ownership info
 	var yearsBeforeSelling = args.howLongBeforeSelling;
 	var incomeTax = args.incomeTaxRate;
-	var currentAnnualInterest = args.currentAnnualInterest;
+	var currentAnnualInterestOnDownPayment = args.currentAnnualInterestOnDownPayment;
 	var annualAppreciation = args.annualAppreciation;
-	
 	var monthlyMortgagePayment = calculateMonthlyMortgagePayment({
 		loanAmount : remainingBalance,
 		interestRate : interestRate,
 		termInYears : termInYears
 	});
-	
+	// initialize some metrics 
 	var totalInterest = 0;
 	var totalPrincipalPayment = 0;
 	var totalTaxSavings = 0;
-	// initalize total appreciation which starts with the purchase price
+	var interestOnDownPayment = downPayment;
+	// initalize total appreciation ( value of home)
 	var totalAppreciation = purchasePrice;
-	// initialize equity on home = purchase price - remaining balance
-	var equityOnHome = purchasePrice-remainingBalance;
-	// initialize saving when renting = sum of downpayment
-	var savingWhenRenting = downPayment;
-	// initialize monthly cash out flow 
-	var monthlyCashOutFlow = monthlyMortgagePayment;
+	// initialize total cost of renting at 0
+	var totalCostOfRenting = 0;
+	// initialize total cost of buying with the down payment
+	var totalCostOfBuying = downPayment;
 	// calculate monthly breakdown for each year before selling
 	for(var j=0; j < yearsBeforeSelling; j++){
+		// total cost of renting = sum of the year totals of monthly rent
+		totalCostOfRenting += monthlyRent * 12;
+		// apply the annual rent increase on the monthly rent
+		monthlyRent += monthlyRent * (expectedAnnualRentIncrease/100);
+		// total appreciation ( value of home) = total appreciaton  + (total appreciation * monthly appreciation rate)
+		totalAppreciation += totalAppreciation * (annualAppreciation/100);
+		// calculate the monthly principal payments, interest, tax savings and remaining balance after payments made
 		for(var i =0; i < 12; i++){
 			var monthlyInterestPayment =  calculateMonthlyInterestPayment( (interestRate/100)/12,remainingBalance );
 			var monthlyPrincipalPayment = monthlyMortgagePayment - monthlyInterestPayment;
@@ -82,44 +87,23 @@ window.mortgageCalculators.compareBuyVsRent = function(args){
 			totalInterest += monthlyInterestPayment;
 			// sum up tax 
 			totalTaxSavings += monthlyInterestPayment * (incomeTax/100);
-			// newest monthly rent value 
-			monthlyRent +=  monthlyRent*((expectedAnnualRentIncrease/100)/12);
-			// monthly cash outflow in buying scenario = monthly mortgage payment - monthlyIncome tax ( + property tax + maintenance + insurance + etc ) 
-			monthlyCashOutFlow = monthlyMortgagePayment - (monthlyInterestPayment * (incomeTax/100) );
-			// calculate total saving when renting = sum of downpayment + (monthlyCashOutflow - monthlyRent)
-			savingWhenRenting += (monthlyCashOutFlow - monthlyRent);
-			// total appreciation ( value of home) = total appreciaton  + (total appreciation * monthly appreciation rate)
-			totalAppreciation += totalAppreciation * ((annualAppreciation/12)/100) ;
-			// equity on home = total appreciation - remaining balance
-			equityOnHome = totalAppreciation - remainingBalance;
-			
 		}
-	}
-	
-	// not sure how this is actually calculated. speadsheet does 0.06* totalappreciation
-	var transactionalCosts = 0.06*totalAppreciation;
-	// calculate total mortgage payments over the years before selling
-	var totalMortgagePayments = totalPrincipalPayment - totalInterest - totalTaxSavings;	
-	// (total cost of buying - (current value of home - total owed to bank ) ) 
-	var netCostOfOwnership = equityOnHome - transactionalCosts;
-	
-	var moneySavedByBuying = netCostOfOwnership - savingWhenRenting;
 
+	}
+	// total cost of buying = (sum of annual costs of buying) + (sum of costs of selling)
+	totalCostOfBuying += (totalPrincipalPayment + totalInterest - totalTaxSavings) + (remainingBalance + closingCosts);
+	// equity on home = total appreciation - remaining balance
+	var equityOnHome = totalAppreciation - remainingBalance;
+	// net cost of buying = total appreciation - total cost of buying 
+	var netCostOfBuying = totalCostOfBuying - totalAppreciation;
+	// build the response
 	var response = {
-		// total appreciation of home 
 		currentValueOfHome : formatResult(totalAppreciation),
-		//total cost of owed to bank = remaining balance
 		totalOwedToBank : formatResult(remainingBalance),
-		// total cost of renting = sum of monthly rent payments
 		equityOnHome : formatResult(equityOnHome),
-		// savings when rening
-		savingWhenRenting : formatResult(savingWhenRenting),
-		//transaction cost 
-		transactionalCosts : formatResult(transactionalCosts),
-		// net cost of ownership
-		netCostOfOwnership : formatResult(netCostOfOwnership),
-		// netCostOfRenting  - netCostOfOwnership  if > 0 - saved money by buying,  if < 0 - saved money from renting 
-		moneySavedByBuying: formatResult(moneySavedByBuying),
+		netCostOfBuying : formatResult(netCostOfBuying),
+		netCostOfRenting : formatResult(totalCostOfRenting),
+		benefitOfBuying : formatResult(totalCostOfRenting - netCostOfBuying)
 			
 	}
 	return response;
