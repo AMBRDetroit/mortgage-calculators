@@ -14,12 +14,147 @@
 		
 			// validate the inputs
 			QUnit.module('Input Validation');
-			// TODO
-/*			
-*		loanAmount (number) : the loan amount 
-*		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
-*		termInYears (number) : the term in years ( will be converted to number of monthly payments in calculations)
-*/		
+			QUnit.test("loanAmount", function(assert) {
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.monthlyMortgagePayments({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("interestRate", function(assert) {
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : "aaa",
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : "6.25",
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : "",
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : -1,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 0,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 6.75,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("termInYears", function(assert) {
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears : "aaa",
+					extraPaymentAmount : 300
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears : "12",
+					extraPaymentAmount : 300
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears : "",
+					extraPaymentAmount : 300
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					extraPaymentAmount : 300
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears :-1,
+					extraPaymentAmount : 300
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears : 0,
+					extraPaymentAmount : 300
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears : 5.75,
+					extraPaymentAmount : 300
+				}).error, undefined, "Float accepted.");
+			});
+		
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("Monthly Mortgage Payments", function(assert) {
