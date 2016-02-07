@@ -160,7 +160,7 @@
 					interestRate : 4.25,
 					termInYears : 5.75,
 					extraPaymentAmount : 300
-				}).error, undefined, "Float accepted.");
+				}).error, true, "Float not accepted.");
 			});
 			QUnit.test("extraPaymentAmount", function(assert) {
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({

@@ -232,7 +232,7 @@
 					downPayment : 5,
 					yearlyPropertyTax : 0,
 					yearlyPropertyInsurance : 0
-				}).error, undefined, "Float accepted.");
+				}).error, true, "Float not accepted accepted.");
 			});
 			QUnit.test("downPayment", function(assert) {
 				assert.equal(mortgageCalculators.howMuchCanIBorrow({

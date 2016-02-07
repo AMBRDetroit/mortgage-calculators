@@ -207,7 +207,7 @@
 					paymentsMade : 12,
 					newInterestRate : 2.75,
 					newTermInYears : 30	
-				}).error, undefined, "Float accepted.");
+				}).error, true, "Float not accepted accepted.");
 			});
 			QUnit.test("paymentsMade", function(assert) {
 				assert.equal(mortgageCalculators.refinanceMortgage({

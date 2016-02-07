@@ -248,7 +248,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, undefined, "Float accepted.");
+				}).error, true, "Float not accepted accepted.");
 			});
 			QUnit.test("monthsBeforeFirstAdjustment", function(assert) {
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
