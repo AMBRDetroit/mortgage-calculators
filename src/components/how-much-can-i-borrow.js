@@ -5,7 +5,7 @@
 *		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
 *		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
 *		downPayment (number) : (number)  ( will be converted into monthly percentage in calculations)	
-*		monthsBetweenAdjustments (number) : (number) between each adjustments,
+*		monthlyDebtPayment (number) : (number) debts paid each month,
 *		yearlyPropertyTax (number) : (will be converted to monthly value in calculations)
 *		yearlyPropertyInsurance (number) : (will be converted to monthly value in calculations)	
 *	}
