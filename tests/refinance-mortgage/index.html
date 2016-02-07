@@ -9,22 +9,402 @@
 		<script src="response.js"></script>
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
-			
 			QUnit.config.reorder = false;
 			QUnit.dump.maxDepth = 6;
 		
-			
 			// validate the inputs
 			QUnit.module('Input Validation');
-			// TODO
-/*			
-*		loanAmount (number) : (number) 
-*		interestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
-*		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
-* != neg, 0 ok		paymentsMade (number) : (number) ,
-* 	newInterestRate (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
-* != neg, != 0 newTermInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
-*/			
+			QUnit.test("loanAmount", function(assert) {
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : "aaaa",
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : "123",
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : "",
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : -1,
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : 0,
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : 100000,
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : 100000.56,
+					interestRate : 3.75,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("interestRate", function(assert) {
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : "aaa",
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : "6.25",
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : "",
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : -1,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 0,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 4,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 6.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("termInYears", function(assert) {
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					termInYears : "aaa",
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					termInYears : "12",
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					termInYears : "",
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					termInYears :-1,
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					termInYears : 0,
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					termInYears : 5,
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					termInYears : 5.75,
+					interestRate : 3.75,
+					loanAmount : 100000,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("paymentsMade", function(assert) {
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : "abc",
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : "12",
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : "",
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : -19,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 0,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 5.75,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, true, "Float not acceptd accepted.");
+			});
+			QUnit.test("newInterestRate", function(assert) {
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : "abc",
+					newTermInYears : 30	
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : "2.75",
+					newTermInYears : 30	
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : "",
+					newTermInYears : 30	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : -10,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 0,
+					newTermInYears : 30	
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 5,
+					newTermInYears : 30	
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 6.75,
+					newTermInYears : 30	
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("newTermInYears", function(assert) {
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : "abc"	
+				}).error, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : "15"	
+				}).error, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : ""	
+				}).error, true, "Is Required");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : -5
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 0
+				}).error, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30	
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.refinanceMortgage({
+					interestRate : 3.75,
+					loanAmount : 100000,
+					termInYears : 30,
+					paymentsMade : 12,
+					newInterestRate : 2.75,
+					newTermInYears : 30.75	
+				}).error, true, "Float not accepted accepted.");
+			});
+			
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("Refinance Mortgage", function(assert) {
