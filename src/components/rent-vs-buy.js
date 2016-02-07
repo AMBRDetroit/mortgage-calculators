@@ -6,9 +6,11 @@
 *		downPayment (number) :  (number) ( will be converted into monthly percentage in calculations)
 *		interestRate (number) : interest rate as an annual percentage ( will be converted into  percentage in calculations)	
 *		termInYears (number) :  the term in years ( will be converted to number of monthly payments in calculations)
-*		howLongBeforeSelling (number) : (number) ,
-*		currentAnnualInterest (number) : interest rate as an annual percentage ( will be converted into monthly percentage in calculations)	
+*		howLongBeforeSelling (number) : (number) the number of years before selling,
 *		incomeTaxRate (number) :  ( will be converted into percentage in calculations)	
+*		expectedAnnualRentIncrease (number) : annual percentage that rent will increase 
+*		closingCosts (number) : percentage of mortgage amount that you pay,
+*		annualAppreciation (number) : percentage value of home will increase annually,
 *	}
 *	response : an object
 *	var response = {
@@ -42,7 +44,6 @@ window.mortgageCalculators.compareBuyVsRent = function(args){
 	// initialize home ownership info
 	var yearsBeforeSelling = args.howLongBeforeSelling;
 	var incomeTax = args.incomeTaxRate;
-	var currentAnnualInterestOnDownPayment = args.currentAnnualInterestOnDownPayment;
 	var annualAppreciation = args.annualAppreciation;
 	var monthlyMortgagePayment = calculateMonthlyMortgagePayment({
 		loanAmount : remainingBalance,
