@@ -1,4 +1,4 @@
-var response = {
+var response1 = {
 	conservative : {
 		priceOfHome : 235794.26,
 		downPayment : 11228.3,
@@ -24,30 +24,6 @@ var response = {
 	}
 };
 var response2 = {
-  aggressive: {
-    downPayment: 0,
-    loanAmount: 0,
-    priceOfHome: 0
-  },
-  conservative: {
-    downPayment: 0,
-    loanAmount: 0,
-    priceOfHome: 0
-  },
-  futureMonthlyPayment: {
-    aggressive: {
-      principalAndInterest: 1320,
-      taxesAndInsurance: 0,
-      totalMonthlyPayment: 1320
-    },
-    conservative: {
-      principalAndInterest: 1040,
-      taxesAndInsurance: 0,
-      totalMonthlyPayment: 1040
-    }
-  }
-}
-var response3 = {
   aggressive: {
     downPayment: 12092.01,
     loanAmount: 241840.27,

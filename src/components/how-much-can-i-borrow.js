@@ -38,7 +38,21 @@
 *	
 */
 window.mortgageCalculators.howMuchCanIBorrow = function(args){
-	var args = validateInputArgs(args);
+	
+	// validate our inputs first
+	var inputData = _validateInputData(args, {
+		interestRate : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		termInYears : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true },
+		grossMonthlyIncome : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		downPayment : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		monthlyDebtPayment : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		yearlyPropertyTax : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		yearlyPropertyInsurance : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false }
+	});
+	if(inputData.error) {
+		return { error : inputData.error }
+	}
+	
 	// initialize valid args
 	var interestRate = args.interestRate;
 	var termInYears = args.termInYears;

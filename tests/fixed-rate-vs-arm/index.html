@@ -109,6 +109,7 @@
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : "6.25",
 					loanAmount : 100000,
+					termInYears : 30,
 					monthsBeforeFirstAdjustment : 36,
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
@@ -118,6 +119,7 @@
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : "",
 					loanAmount : 100000,
+					termInYears : 30,
 					monthsBeforeFirstAdjustment : 36,
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
@@ -126,6 +128,7 @@
 				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : 100000,
+					termInYears : 30,
 					monthsBeforeFirstAdjustment : 36,
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
@@ -144,15 +147,17 @@
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : 0,
 					loanAmount : 100000,
+					termInYears : 30,
 					monthsBeforeFirstAdjustment : 36,
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, undefined, "Must be greater then or equal 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : 4,
 					loanAmount : 100000,
+					termInYears : 30,
 					monthsBeforeFirstAdjustment : 36,
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
@@ -162,6 +167,7 @@
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : 6.75,
 					loanAmount : 100000,
+					termInYears : 30,
 					monthsBeforeFirstAdjustment : 36,
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
@@ -308,7 +314,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, undefined, "Can be 0");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -328,7 +334,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, undefined, "Float accepted.");
+				}).error != undefined, true, "Float not accepted accepted.");
 			});
 			QUnit.test("monthsBetweenAdjustments", function(assert) {
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
@@ -408,7 +414,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, undefined, "Float accepted.");
+				}).error != undefined, true, "Float not accepted accepted.");
 			});
 			QUnit.test("expectedAdjustmentRate", function(assert) {
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
@@ -654,7 +660,7 @@
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("Fixed vs ARM", function(assert) {
-				var args = {
+				assert.deepEqual(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : 100000,
 					termInYears : 30,
 					interestRate : 6.5,
@@ -663,67 +669,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.comparefixedRateVsARM(args);
-				assert.deepEqual(result, response , "100,000 @ 3.75 for 30 years vs 100,000 @ 2.75 for 30 years after 12 payments");
-				
-				var args = {
-					loanAmount : "100000",
-					termInYears : "30",
-					interestRate : "6.5",
-					monthsBeforeFirstAdjustment : "36",
-					monthsBetweenAdjustments : "12",
-					expectedAdjustmentRate : "0.25",
-					initialInterestRate : "6.5",
-					maximumInterestRate : "12"
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.comparefixedRateVsARM(args);
-				assert.deepEqual(result, response , "convert all inputs to numbers before calculating");
-				
-				var args = {
-					loanAmount : -100000,
-					termInYears : 30,
-					interestRate : 6.5,
-					monthsBeforeFirstAdjustment : 36,
-					monthsBetweenAdjustments : 12,
-					expectedAdjustmentRate : 0.25,
-					initialInterestRate : 6.5,
-					maximumInterestRate : 12
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.comparefixedRateVsARM(args);
-				assert.deepEqual(result, response2 , "negative loan amount returns 0");
-				
-				var args = {
-					loanAmount : 100000,
-					termInYears : -30,
-					interestRate : 6.5,
-					monthsBeforeFirstAdjustment : 36,
-					monthsBetweenAdjustments : 12,
-					expectedAdjustmentRate : 0.25,
-					initialInterestRate : 6.5,
-					maximumInterestRate : 12
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.comparefixedRateVsARM(args);
-				assert.deepEqual(result, undefined , "negative term in years will return undefined, calculations will not run");
-
-				var args = {
-					loanAmount : 100000,
-					termInYears : 30,
-					interestRate : 6.5,
-					monthsBeforeFirstAdjustment : 36,
-					monthsBetweenAdjustments : -12,
-					expectedAdjustmentRate : 0.25,
-					initialInterestRate : 6.5,
-					maximumInterestRate : 12
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.comparefixedRateVsARM(args);
-				assert.deepEqual(result, undefined , "negative months between adjustments will return undefined, calculations will not run");
-	
+				}), response1, "100,000 @ 3.75 for 30 years vs 100,000 @ 2.75 for 30 years after 12 payments");
 			});	
 		</script>
 	</head>

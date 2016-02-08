@@ -1,4 +1,4 @@
-var response = {
+var response1 = {
 	  currentValueOfHome: 268783.28,
 	  totalOwedToBank: 167371.45,
 	  equityOnHome: 101411.83,

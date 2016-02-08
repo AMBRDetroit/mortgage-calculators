@@ -59,16 +59,16 @@
 					downPayment : 5,
 					yearlyPropertyTax : 0,
 					yearlyPropertyInsurance : 0
-				}).error != undefined, true, "Cannot be neg.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.howMuchCanIBorrow({
 					interestRate : 3.75,
-					grossMonthlyIncome : 4000,
+					grossMonthlyIncome : 0,
 					monthlyDebtPayment :  400,
 					termInYears : 30,
 					downPayment : 5,
 					yearlyPropertyTax : 0,
 					yearlyPropertyInsurance : 0
-				}).error, undefined, "Can be 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.howMuchCanIBorrow({
 					interestRate : 3.75,
 					grossMonthlyIncome : 4000,
@@ -530,7 +530,7 @@
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("How Much Can I Borrow?", function(assert) {
-				var args = {
+				assert.deepEqual(mortgageCalculators.howMuchCanIBorrow({
 					interestRate : 3.75,
 					grossMonthlyIncome : 4000,
 					monthlyDebtPayment :  400,
@@ -538,35 +538,8 @@
 					downPayment : 5,
 					yearlyPropertyTax : 0,
 					yearlyPropertyInsurance : 0		
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.howMuchCanIBorrow(args);
-				assert.deepEqual(result, response , "+4000/month - 400/month with 5% down payment for 30 years @ 3.75%");
-				var args = {
-					interestRate : -3.75,
-					grossMonthlyIncome : 4000,
-					monthlyDebtPayment :  400,
-					termInYears : 30,
-					downPayment : 5,
-					yearlyPropertyTax : 0,
-					yearlyPropertyInsurance : 0		
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.howMuchCanIBorrow(args);
-				assert.deepEqual(result, response2 , "negative interest rate");
-				var args = {
-					interestRate : 3.75,
-					grossMonthlyIncome : 4000,
-					monthlyDebtPayment :  400,
-					termInYears : -30,
-					downPayment : 5,
-					yearlyPropertyTax : 0,
-					yearlyPropertyInsurance : 0		
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.howMuchCanIBorrow(args);
-				assert.deepEqual(result, response2 , "negative term in years");
-				var args = {
+				}), response1, "+4000/month - 400/month with 5% down payment for 30 years @ 3.75%");
+				assert.deepEqual(mortgageCalculators.howMuchCanIBorrow({
 					interestRate : 3.75,
 					grossMonthlyIncome : 4000,
 					monthlyDebtPayment :  400,
@@ -574,10 +547,7 @@
 					downPayment : 5,
 					yearlyPropertyTax : 1200,
 					yearlyPropertyInsurance : 1200		
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.howMuchCanIBorrow(args);
-				assert.deepEqual(result, response3 , "with yearly property tax and insurance");
+				}), response2, "with yearly property tax and insurance");
 			});	
 		</script>
 	</head>

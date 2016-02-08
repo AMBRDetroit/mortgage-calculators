@@ -408,39 +408,14 @@
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("Refinance Mortgage", function(assert) {
-				var args = {
+				assert.deepEqual(mortgageCalculators.refinanceMortgage({
 					interestRate : 3.75,
 					loanAmount : 100000,
 					termInYears : 30,
 					paymentsMade : 12,
 					newInterestRate : 2.75,
 					newTermInYears : 30	
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.refinanceMortgage(args);
-				assert.deepEqual(result, response , "100,000 @ 3.75 for 30 years vs 100,000 @ 2.75 for 30 years after 12 payments");
-				var args = {
-					interestRate : -3.75,
-					loanAmount : 100000,
-					termInYears : 30,
-					paymentsMade : 12,
-					newInterestRate : 2.75,
-					newTermInYears : 30	
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.refinanceMortgage(args);
-				assert.deepEqual(result, response2 , "negative interest rate");
-				var args = {
-					interestRate : 3.75,
-					loanAmount : 100000,
-					termInYears : -30,
-					paymentsMade : 12,
-					newInterestRate : 2.75,
-					newTermInYears : 30	
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.refinanceMortgage(args);
-				assert.deepEqual(result, response3 , "negative term in years ");
+				}), response1, "100,000 @ 3.75 for 30 years vs 100,000 @ 2.75 for 30 years after 12 payments");
 			});	
 		</script>
 	</head>

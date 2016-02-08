@@ -24,7 +24,21 @@
 *	
 */
 window.mortgageCalculators.refinanceMortgage = function(args){
-	var args = validateInputArgs(args);
+	
+	// validate our inputs first
+	var inputData = _validateInputData(args, {
+		loanAmount : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: false },
+		interestRate : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		termInYears : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true },
+		newInterestRate : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		newTermInYears : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true },
+		newTermInYears : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true },
+		paymentsMade : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: true }
+	});
+	if(inputData.error) {
+		return { error : inputData.error }
+	}
+	
 	var loanAmount = args.loanAmount;
 	var interestRate = args.interestRate;
 	var termInYears = args.termInYears;

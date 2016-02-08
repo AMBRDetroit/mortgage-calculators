@@ -21,7 +21,18 @@
 *	}
 */
 window.mortgageCalculators.compareFifteenVsThirtyYearMortgages = function(args){
-	var args = validateInputArgs(args);
+	
+	// validate our inputs first
+	var inputData = _validateInputData(args, {
+		loanAmount : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: false },
+		interestRate1 : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		interestRate2 : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false }
+	});
+	if(inputData.error) {
+		return { error : inputData.error }
+	}
+	
+	// set some working data
 	var loanAmount = args.loanAmount;
 	var interestRate1 = args.interestRate1;
 	var interestRate2 = args.interestRate2;

@@ -8,8 +8,18 @@
 *
 *	response will be a rounded number
 */
-window.mortgageCalculators.monthlyMortgagePayments = function(args){
+window.mortgageCalculators.monthlyMortgagePayments = function(args) {
+	
+	// validate our inputs first
+	var inputData = _validateInputData(args, {
+		loanAmount : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: false },
+		interestRate : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		termInYears : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true }
+	});
+	if(inputData.error) {
+		return { error : inputData.error }
+	}
+	
 	// validate the input arguments
-	var args = validateInputArgs(args);
 	return formatResult(calculateMonthlyMortgagePayment(args));
 };

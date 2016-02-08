@@ -23,8 +23,25 @@
 *		moneySavedByBuying : (number)
 *	};
 */
-window.mortgageCalculators.compareBuyVsRent = function(args){
-	var args = validateInputArgs(args);
+window.mortgageCalculators.compareBuyVsRent = function(args) {
+	
+	// validate our inputs first
+	var inputData = _validateInputData(args, {
+		monthlyRent : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: false },
+		purchasePrice : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: false },
+		downPayment : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		interestRate : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		termInYears : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true },
+		howLongBeforeSelling : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true },
+		incomeTaxRate : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		expectedAnnualRentIncrease : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		closingCosts : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		annualAppreciation : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+	});
+	if(inputData.error) {
+		return { error : inputData.error }
+	}
+	
 	// initalize rent info
 	var monthlyRent = args.monthlyRent;
 	var expectedAnnualRentIncrease = args.expectedAnnualRentIncrease;

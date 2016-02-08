@@ -7,7 +7,7 @@
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgage-calculators.php"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
 		
 			QUnit.config.reorder = false;
@@ -765,7 +765,7 @@
 					annualAppreciation : 3,
 					howLongBeforeSelling : 10,
 					incomeTaxRate : 28
-				}).error != undefined, true, "Must be greater then or equal to 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.compareBuyVsRent({
 					monthlyRent : 800,
 					expectedAnnualRentIncrease : 5,
@@ -892,7 +892,7 @@
 			// do the calculations
 			QUnit.module('Calculations');
 			QUnit.test("Rent Vs Own", function(assert) {
-				var args = {
+				assert.deepEqual(mortgageCalculators.compareBuyVsRent({
 					monthlyRent : 800,
 					expectedAnnualRentIncrease : 5,
 					purchasePrice : 200000,
@@ -903,10 +903,7 @@
 					annualAppreciation : 3,
 					howLongBeforeSelling : 10,
 					incomeTaxRate : 28
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.compareBuyVsRent(args);
-				assert.deepEqual(result, response , "");
+				}), response1, "Rent vs Buy calculation.");
 			});	
 		</script>
 	</head>
