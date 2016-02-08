@@ -890,7 +890,24 @@
 			});
 				
 			// do the calculations
-			QUnit.module('Calculations');
+			QUnit.module('Calculations : not all inputs are set to > 0');
+			QUnit.test("Rent Vs Own", function(assert) {
+				assert.deepEqual(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 0,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 0,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}), response1, "Rent vs Buy calculation.");
+			});	
+			
+			// do the calculations
+			QUnit.module('Calculations : all inputs > 0');
 			QUnit.test("Rent Vs Own", function(assert) {
 				assert.deepEqual(mortgageCalculators.compareBuyVsRent({
 					monthlyRent : 800,
@@ -903,7 +920,7 @@
 					annualAppreciation : 3,
 					howLongBeforeSelling : 10,
 					incomeTaxRate : 28
-				}), response1, "Rent vs Buy calculation.");
+				}), response2, "Rent vs Buy calculation.");
 			});	
 		</script>
 	</head>
