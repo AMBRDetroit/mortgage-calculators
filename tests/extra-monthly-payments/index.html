@@ -17,6 +17,12 @@
 			QUnit.module('Input Validation');
 			QUnit.test("loanAmount", function(assert) {
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : parseFloat(""),
+					interestRate : 6.75,
+					termInYears : 5,
+					extraPaymentAmount : 300
+				}).error != undefined, true, "Cannot be a NaN");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : "aaaa",
 					interestRate : 6.75,
 					termInYears : 5,

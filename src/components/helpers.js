@@ -9,7 +9,7 @@ function _validateInputData(data, rules) {
 			result.error = key + " is required.";
 			break;
 		}
-		if(rules[key].isNumber && (typeof data[key] != "number")) {
+		if(rules[key].isNumber && ((typeof data[key] != "number") || isNaN(data[key]))) {
 			result.error = key + " must be a number.";
 			break;
 		}
