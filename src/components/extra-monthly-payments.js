@@ -30,8 +30,19 @@
 *	}
 */
 window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments = function(args){
-	// validate the input arguments
-	var args = validateInputArgs(args);
+
+	// validate our inputs first
+	var inputData = _validateInputData(args, {
+		loanAmount : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: false },
+		interestRate : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false },
+		termInYears : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : true, isNotFloat: true },
+		extraPaymentAmount : { isRequired : true, isNumber : true, isNotNegative : true, isNotZero : false, isNotFloat: false }
+	});
+	if(inputData.error) {
+		return { error : inputData.error }
+	}
+	
+	// set some working data.
 	var monthlyInterestRate =  (args.interestRate/100)/12;
 	var numberOfMonthlyPayments = args.termInYears * 12;
 	var extraPaymentAmount = args.extraPaymentAmount;

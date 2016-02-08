@@ -190,8 +190,14 @@
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 10,
-					extraPaymentAmount : 0
+					extraPaymentAmount : -10
 				}).error != undefined, true, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 100000,
+					interestRate : 4.25,
+					termInYears : 10,
+					extraPaymentAmount : 0
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
@@ -209,45 +215,12 @@
 			// test the actual calculations
 			QUnit.module('Calculations');
 			QUnit.test("Extra Monthly Mortgage Payments", function(assert) {
-				var args = {
+				assert.deepEqual(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 200000,
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}
-				// format result to decimal places of two
-				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
-				assert.deepEqual(result, response , "200,000 @ 6.75% for 5 years ");
-				
-				var args = {
-					loanAmount : -200000,
-					interestRate : 6.75,
-					termInYears : 5,
-					extraPaymentAmount : 300
-				}
-				//format result to decimal places of two
-				var result = window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
-				assert.deepEqual(result, response2 , " Loan amount is negative, don't calculate payment breakdowns");
-
-				var args = {
-					loanAmount : 200000,
-					interestRate : -6.75,
-					termInYears : 5,
-					extraPaymentAmount : 300
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
-				assert.deepEqual(result, response3 , " interest rate is negative, don't calculate payment breakdowns");
-				
-				var args = {
-					loanAmount : 200000,
-					interestRate : 6.75,
-					termInYears : -5,
-					extraPaymentAmount : 300
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
-				assert.deepEqual(result, response4 , " term in years is negative, don't calculate payment breakdowns");
+				}), response1 , "200,000 @ 6.75% for 5 years ");
 			});	
 		</script>
 	</head>

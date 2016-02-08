@@ -1,4 +1,4 @@
-var response = {
+var response1 = {
 	withExtraPayment : {
 		totalMonthlyPayment :  4236.69,
 		interestRate : 6.75,
@@ -306,80 +306,13 @@ var response = {
 			}]
 		}]
 	},
-	
 	withoutExtraPayment : {
 		totalMonthlyPayment : 3936.69,
 		interestRate : 6.75,
 		term : 5,
 		totalCost : 236201.53
 	}
-
 };
-
-
-var response2 = {
-	withExtraPayment : {
-		totalMonthlyPayment :  300,
-		interestRate : 6.75,
-		term : 5,
-		totalCost : 0,
-		payments : [{
-	        annualInterestPayment: 0,
-	        annualPrincipalPayment: 0,
-	        balance: 0,
-	        monthlyBreakdown: []
-	  }]
-	},
-	withoutExtraPayment : {
-		totalMonthlyPayment : 0,
-		interestRate : 6.75,
-		term : 5,
-		totalCost : 0
-	}
-}
-
-var response3 = {
-	withExtraPayment : {
-		totalMonthlyPayment :  0,
-		interestRate : 0,
-		term : 5,
-		totalCost : 0,
-		payments : [{
-	        annualInterestPayment: 0,
-	        annualPrincipalPayment: 0,
-	        balance: 200000,
-	        monthlyBreakdown: []
-	  }]
-	},
-	withoutExtraPayment : {
-		totalMonthlyPayment : 0,
-		interestRate : 0,
-		term : 5,
-		totalCost : 0
-	}
-}
-
-var response4 = {
-	withExtraPayment : {
-		totalMonthlyPayment :  Infinity,
-		interestRate : 6.75,
-		term : 0,
-		totalCost : 0,
-		payments : [{
-	        annualInterestPayment: 0,
-	        annualPrincipalPayment: 0,
-	        balance: 200000,
-	        monthlyBreakdown: []
-	  }]
-	},
-	withoutExtraPayment : {
-		totalMonthlyPayment : Infinity,
-		interestRate : 6.75,
-		term : 0,
-		totalCost : 0
-	}
-}
-
 
 
 

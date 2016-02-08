@@ -1,3 +1,36 @@
+// validate data based on data and rules
+function _validateInputData(data, rules) {
+	var result = {
+		error : false,
+		data : data
+	};
+	for(var key in rules) {
+		if(rules[key].isRequired && (data[key] == undefined)) {
+			result.error = key + " is required.";
+			break;
+		}
+		if(rules[key].isNumber && (typeof data[key] != "number")) {
+			result.error = key + " must be a number.";
+			break;
+		}
+		if(rules[key].isNotNegative && (data[key] < 0)) {
+			result.error = key + " must be a positive number.";
+			break;
+		}
+		if(rules[key].isNotZero && (data[key] == 0)) {
+			result.error = key + " must be greater then 0.";
+			break;
+		}
+		if(rules[key].isNotFloat && ((data[key] % 1) !== 0)) {
+			result.error = key + " must be an integer value.";
+			break;
+		}
+	}
+	return result;
+};
+
+
+/*
 function validateInputArgs(args){
 	for(var key in args){
 		// if input value is not a number, set it to 0, else return the value as a number
@@ -5,6 +38,7 @@ function validateInputArgs(args){
 	}
 	return args;
 };
+*/
 
 function calculateMonthlyInterestPayment(monthlyInterestRate,remainingBalance){
 	return monthlyInterestRate * remainingBalance;
