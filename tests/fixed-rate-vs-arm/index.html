@@ -25,7 +25,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : "123",
 					termInYears : 30,
@@ -35,7 +35,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : "",
 					termInYears : 30,
@@ -45,7 +45,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					interestRate : 6.5,
@@ -54,7 +54,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : -1,
 					termInYears : 30,
@@ -64,7 +64,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : 0,
 					termInYears : 30,
@@ -74,7 +74,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : 100000,
 					termInYears : 30,
@@ -105,7 +105,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : "6.25",
 					loanAmount : 100000,
@@ -114,7 +114,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : "",
 					loanAmount : 100000,
@@ -123,7 +123,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : 100000,
 					monthsBeforeFirstAdjustment : 36,
@@ -131,7 +131,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : -1,
 					loanAmount : 100000,
@@ -140,7 +140,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : 0,
 					loanAmount : 100000,
@@ -149,7 +149,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : 4,
 					loanAmount : 100000,
@@ -179,7 +179,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : "12",
 					loanAmount : 100000,
@@ -189,7 +189,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : "",
 					loanAmount : 100000,
@@ -199,7 +199,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					loanAmount : 100000,
 					interestRate : 6.5,
@@ -208,7 +208,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears :-1,
 					loanAmount : 100000,
@@ -218,7 +218,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 0,
 					loanAmount : 100000,
@@ -228,7 +228,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 5,
 					loanAmount : 100000,
@@ -248,7 +248,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Float not accepted accepted.");
+				}).error != undefined, true, "Float not accepted accepted.");
 			});
 			QUnit.test("monthsBeforeFirstAdjustment", function(assert) {
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
@@ -260,7 +260,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -270,7 +270,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -279,7 +279,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					interestRate : 6.5,
@@ -288,7 +288,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -298,7 +298,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -340,7 +340,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -350,7 +350,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -359,7 +359,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					interestRate : 6.5,
@@ -368,7 +368,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -378,7 +378,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -388,7 +388,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -420,7 +420,7 @@
 					expectedAdjustmentRate : "aaa",
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -430,7 +430,7 @@
 					expectedAdjustmentRate : "12",
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -439,7 +439,7 @@
 					monthsBetweenAdjustments : 12,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					interestRate : 6.5,
@@ -448,7 +448,7 @@
 					expectedAdjustmentRate : "",
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -458,7 +458,7 @@
 					expectedAdjustmentRate : -1,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -468,7 +468,7 @@
 					expectedAdjustmentRate : 0,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -500,7 +500,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : "aaa",
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -510,7 +510,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : "12.5",
 					maximumInterestRate : 12
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -519,7 +519,7 @@
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					interestRate : 6.5,
@@ -528,7 +528,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : "",
 					maximumInterestRate : 12
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -538,7 +538,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : -1,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -548,7 +548,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 0,
 					maximumInterestRate : 12
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -580,7 +580,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : "aaa"
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -590,7 +590,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : "12.3"
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -599,7 +599,7 @@
 					monthsBetweenAdjustments : 12,
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					interestRate : 6.5,
@@ -608,7 +608,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : ""
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -618,7 +618,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : -1
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -628,7 +628,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 0
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,

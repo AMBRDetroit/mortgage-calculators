@@ -19,32 +19,32 @@
 					loanAmount : 100000,
 					interestRate : 3.75,
 					termInYears : 30
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 3.75,
 					termInYears : 30
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 3.75,
 					termInYears : 30
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 3.75,
 					termInYears : 30
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 3.75,
 					termInYears : 30
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 3.75,
 					termInYears : 30
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 3.75,
@@ -61,31 +61,31 @@
 					loanAmount : 100000,
 					interestRate : "aaa",
 					termInYears : 5
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : "6.25",
 					termInYears : 5
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : "",
 					termInYears : 5
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					termInYears : 5
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : -1,
 					termInYears : 5
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 0,
 					termInYears : 5
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4,
@@ -102,31 +102,31 @@
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : "aaa"
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : "12"
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : ""
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4.25
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears :-1
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 0
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
@@ -136,7 +136,7 @@
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 5.75
-				}).error, true, "Float not accepted.");
+				}).error != undefined, true, "Float not accepted.");
 			});
 		
 			// do the calculations

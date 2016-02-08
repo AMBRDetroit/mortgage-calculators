@@ -7,7 +7,7 @@
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgage-calculators.js"></script>
+		<script src="../../src/mortgage-calculators.php"></script>
 		<script>
 			
 			QUnit.config.reorder = false;
@@ -21,36 +21,36 @@
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : "123",
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : "",
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : -1,
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 0,
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 6.75,
@@ -70,36 +70,36 @@
 					interestRate : "aaa",
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : "6.25",
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : "",
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : -1,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 0,
 					termInYears : 5,
 					extraPaymentAmount : 300
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4,
@@ -119,36 +119,36 @@
 					interestRate : 4.25,
 					termInYears : "aaa",
 					extraPaymentAmount : 300
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : "12",
 					extraPaymentAmount : 300
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : "",
 					extraPaymentAmount : 300
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					extraPaymentAmount : 300
-				}).error, true, "Is Required");
+				}).error != undefined, true, "Is Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears :-1,
 					extraPaymentAmount : 300
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 0,
 					extraPaymentAmount : 300
-				}).error, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
@@ -160,7 +160,7 @@
 					interestRate : 4.25,
 					termInYears : 5.75,
 					extraPaymentAmount : 300
-				}).error, true, "Float not accepted.");
+				}).error != undefined, true, "Float not accepted.");
 			});
 			QUnit.test("extraPaymentAmount", function(assert) {
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
@@ -168,30 +168,30 @@
 					interestRate : 4.25,
 					termInYears : 10,
 					extraPaymentAmount : "abc"
-				}).error, true, "Cannot be a text string");
+				}).error != undefined, true, "Cannot be a text string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 10,
 					extraPaymentAmount : "300"
-				}).error, true, "Cannot be a number string");
+				}).error != undefined, true, "Cannot be a number string");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 10,
 					extraPaymentAmount : ""
-				}).error, true, "Is Not Required");
+				}).error != undefined, true, "Is Not Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 10
-				}).error, true, "Is Not Required");
+				}).error != undefined, true, "Is Not Required");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
 					termInYears : 10,
 					extraPaymentAmount : 0
-				}).error, true, "Must be greater then or equal to 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 100000,
 					interestRate : 4.25,
@@ -215,19 +215,9 @@
 					termInYears : 5,
 					extraPaymentAmount : 300
 				}
-				//format result to decimal places of two
+				// format result to decimal places of two
 				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
 				assert.deepEqual(result, response , "200,000 @ 6.75% for 5 years ");
-				
-				var args = {
-					loanAmount : "200000",
-					interestRate : "6.75",
-					termInYears : "5",
-					extraPaymentAmount : "300"
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
-				assert.deepEqual(result, response , "Convert inputs into numbers before calculating ");
 				
 				var args = {
 					loanAmount : -200000,
