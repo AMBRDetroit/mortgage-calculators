@@ -118,7 +118,7 @@
 					paymentsMade : 12,
 					newInterestRate : 2.75,
 					newTermInYears : 30	
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.refinanceMortgage({
 					interestRate : 0,
 					loanAmount : 100000,
@@ -126,7 +126,7 @@
 					paymentsMade : 12,
 					newInterestRate : 2.75,
 					newTermInYears : 30	
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.refinanceMortgage({
 					interestRate : 4,
 					loanAmount : 100000,
@@ -313,7 +313,7 @@
 					paymentsMade : 12,
 					newInterestRate : -10,
 					newTermInYears : 30	
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.refinanceMortgage({
 					interestRate : 3.75,
 					loanAmount : 100000,
@@ -321,7 +321,7 @@
 					paymentsMade : 12,
 					newInterestRate : 0,
 					newTermInYears : 30	
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.refinanceMortgage({
 					interestRate : 3.75,
 					loanAmount : 100000,

@@ -80,12 +80,12 @@
 					loanAmount : 100000,
 					interestRate1 : -1,
 					interestRate2 : 4.75
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
 					loanAmount : 100000,
 					interestRate1 : 0,
 					interestRate2 : 4.75
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
 					loanAmount : 100000,
 					interestRate1 : 5,
@@ -121,12 +121,12 @@
 					loanAmount : 100000,
 					interestRate1 : 6.25,
 					interestRate2 : -1
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
 					loanAmount : 100000,
 					interestRate1 : 6.25,
 					interestRate2 : 0
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.compareFifteenVsThirtyYearMortgages({
 					loanAmount : 100000,
 					interestRate1 : 6.25,

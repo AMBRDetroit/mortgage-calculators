@@ -80,12 +80,12 @@
 					loanAmount : 100000,
 					interestRate : -1,
 					termInYears : 5
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 0,
 					termInYears : 5
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equalt to 0.");
 				assert.equal(mortgageCalculators.monthlyMortgagePayments({
 					loanAmount : 100000,
 					interestRate : 4,

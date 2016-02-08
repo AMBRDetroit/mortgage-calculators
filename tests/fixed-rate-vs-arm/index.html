@@ -140,7 +140,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : 0,
 					loanAmount : 100000,
@@ -149,7 +149,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					interestRate : 4,
 					loanAmount : 100000,
@@ -458,7 +458,7 @@
 					expectedAdjustmentRate : -1,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -468,7 +468,7 @@
 					expectedAdjustmentRate : 0,
 					initialInterestRate : 6.5,
 					maximumInterestRate : 12
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -538,7 +538,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : -1,
 					maximumInterestRate : 12
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,
@@ -548,7 +548,7 @@
 					expectedAdjustmentRate : 0.25,
 					initialInterestRate : 0,
 					maximumInterestRate : 12
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.comparefixedRateVsARM({
 					termInYears : 30,
 					loanAmount : 100000,

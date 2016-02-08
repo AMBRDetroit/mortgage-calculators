@@ -132,7 +132,7 @@
 					downPayment : 5,
 					yearlyPropertyTax : 0,
 					yearlyPropertyInsurance : 0
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error != undefined, true, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.howMuchCanIBorrow({
 					interestRate : 0,
 					grossMonthlyIncome : 4000,
@@ -141,7 +141,7 @@
 					downPayment : 5,
 					yearlyPropertyTax : 0,
 					yearlyPropertyInsurance : 0
-				}).error != undefined, true, "Must be greater then 0.");
+				}).error, undefined, "Must be greater then or equal to 0.");
 				assert.equal(mortgageCalculators.howMuchCanIBorrow({
 					interestRate : 5,
 					grossMonthlyIncome : 4000,
