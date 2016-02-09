@@ -38,8 +38,8 @@
 						}
 						results = mortgageCalculators.refinanceMortgage(args);
 						console.log(results);
-						 $('.table-1__tbody').html('<tr><td>'+results.oldMonthlyMortgage.monthlyMortgagePayment+'</td><td>'+results.oldMonthlyMortgage.remainingInterest+'</td></tr>');
-						 $('.table-2__tbody').html('<tr><td>'+results.newMonthlyMortgage.newMortgageTotal+'</td><td>'+results.newMonthlyMortgage.monthlyMortgagePayment+'</td><td>'+results.newMonthlyMortgage.remainingInterest+'</td></tr>');
+						 $('.table-1__tbody').html('<tr><td class="table__cell">'+results.oldMonthlyMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.oldMonthlyMortgage.remainingInterest+'</td></tr>');
+						 $('.table-2__tbody').html('<tr><td class="table__cell">'+results.newMonthlyMortgage.newMortgageTotal+'</td><td class="table__cell">'+results.newMonthlyMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.newMonthlyMortgage.remainingInterest+'</td></tr>');
 						 $('.savings').html(results.interestSaved);
 					}
 				});

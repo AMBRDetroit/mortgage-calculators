@@ -35,8 +35,8 @@
 							interestRate2 : args[2].value
 						}
 						results = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
-						$('.table-1__tbody').html('<tr><td>'+results.fifteenYearMortgage.monthlyMortgagePayment+'</td><td>'+results.fifteenYearMortgage.totalInterest+'</td><td>'+results.fifteenYearMortgage.totalPayments+'</td></tr>');
-						 $('.table-2__tbody').html('<tr><td>'+results.thirtyYearMortgage.monthlyMortgagePayment+'</td><td>'+results.thirtyYearMortgage.totalInterest+'</td><<td>'+results.thirtyYearMortgage.totalPayments+'</td></tr>');
+						$('.table-1__tbody').html('<tr><td class="table__cell">'+results.fifteenYearMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.fifteenYearMortgage.totalInterest+'</td><td class="table__cell">'+results.fifteenYearMortgage.totalPayments+'</td></tr>');
+						 $('.table-2__tbody').html('<tr><td class="table__cell">'+results.thirtyYearMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalInterest+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalPayments+'</td></tr>');
 					}
 				});
 			});
@@ -74,8 +74,7 @@
 						<th class="table__header">Total Interest</th>
 					</tr>
 				</thead>
-				<tbody class="table-1__tbody">
-				</tbody>
+				<tbody class="table-1__tbody"></tbody>
 			</table>
 			<h2 class="headline headline--results">30 Year Mortgage</h2>
 			<table class="table-2">
@@ -86,8 +85,7 @@
 						<th class="table__header">Total Payments</th>
 					</tr>
 				</thead>
-				<tbody class="table-2__tbody">
-				</tbody>
+				<tbody class="table-2__tbody"></tbody>
 			</table>
 		</div>
 		

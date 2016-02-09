@@ -40,8 +40,8 @@
 						}
 						results = mortgageCalculators.comparefixedRateVsARM(args);
 						console.log(results);
-						 $('.table-1__tbody').html('<tr><td>'+results.fixedRate.monthlyMortgagePayment+'</td></tr>');
-						 $('.table-2__tbody').html('<tr><td>'+results.ARM.initialMonthlyMortgagePayment+'</td><td>'+results.ARM.maxMonthlyMortgagePayment+'</td></tr>');
+						 $('.table-1__tbody').html('<tr><td class="table__cell">'+results.fixedRate.monthlyMortgagePayment+'</td></tr>');
+						 $('.table-2__tbody').html('<tr><td class="table__cell">'+results.ARM.initialMonthlyMortgagePayment+'</td><td class="table__cell">'+results.ARM.maxMonthlyMortgagePayment+'</td></tr>');
 					}
 				});
 			});

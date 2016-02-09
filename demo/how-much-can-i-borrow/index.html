@@ -37,13 +37,13 @@
 							yearlyPropertyInsurance : args[6].value
 						}	
 						var results = mortgageCalculators.howMuchCanIBorrow(args);
-						$('.js-loanAmount').html('<td>Loan Amount</td><td>'+results.conservative.loanAmount+'</td><td>'+results.aggressive.loanAmount+'</td>');
-						$('.js-downPayment').html('<td>Down Payment</td><td>'+results.conservative.downPayment+'</td><td>'+results.aggressive.downPayment+'</td>');
-						$('.js-priceOfHome').html('<td>Price of Home</td><td>'+results.conservative.priceOfHome+'</td><td>'+results.aggressive.priceOfHome+'</td>');
+						$('.js-loanAmount').html('<td class="table__cell">Loan Amount</td><td class="table__cell">'+results.conservative.loanAmount+'</td><td class="table__cell">'+results.aggressive.loanAmount+'</td>');
+						$('.js-downPayment').html('<td class="table__cell">Down Payment</td><td class="table__cell">'+results.conservative.downPayment+'</td><td class="table__cell">'+results.aggressive.downPayment+'</td>');
+						$('.js-priceOfHome').html('<td class="table__cell">Price of Home</td><td class="table__cell">'+results.conservative.priceOfHome+'</td><td class="table__cell">'+results.aggressive.priceOfHome+'</td>');
 						
-						$('.js-principalAndInterest').html('<td>Principal and Interest</td><td>'+results.futureMonthlyPayment.conservative.principalAndInterest+'</td><td>'+results.futureMonthlyPayment.aggressive.principalAndInterest+'</td>');
-						$('.js-taxesAndInsurance').html('<td>Taxes and Insurance</td><td>'+results.futureMonthlyPayment.conservative.taxesAndInsurance+'</td><td>'+results.futureMonthlyPayment.aggressive.taxesAndInsurance+'</td>');
-						$('.js-totalMonthlyPayment').html('<td>Total Monthly Payment</td><td>'+results.futureMonthlyPayment.conservative.totalMonthlyPayment+'</td><td>'+results.futureMonthlyPayment.aggressive.totalMonthlyPayment+'</td>');
+						$('.js-principalAndInterest').html('<td class="table__cell">Principal and Interest</td><td class="table__cell">'+results.futureMonthlyPayment.conservative.principalAndInterest+'</td><td class="table__cell">'+results.futureMonthlyPayment.aggressive.principalAndInterest+'</td>');
+						$('.js-taxesAndInsurance').html('<td class="table__cell">Taxes and Insurance</td><td class="table__cell">'+results.futureMonthlyPayment.conservative.taxesAndInsurance+'</td><td class="table__cell">'+results.futureMonthlyPayment.aggressive.taxesAndInsurance+'</td>');
+						$('.js-totalMonthlyPayment').html('<td class="table__cell">Total Monthly Payment</td><td class="table__cell">'+results.futureMonthlyPayment.conservative.totalMonthlyPayment+'</td><td class="table__cell">'+results.futureMonthlyPayment.aggressive.totalMonthlyPayment+'</td>');
 					}
 	
 				});
