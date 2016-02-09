@@ -9,6 +9,11 @@
 		<script type="text/javascript">
 			var results;
 		
+			function clearResults() {
+				$(".form__error").html("");
+				$('.js-loanAmount, .js-downPayment, .js-priceOfHome, .js-principalAndInterest, .js-taxesAndInsurance, .js-totalMonthlyPayment').html("");
+			};
+			
 			$(function() {
 				
 				$('body').on('submit','form',{},function(e){
@@ -22,46 +27,18 @@
 					for(var i = 0; i < rawInputs.length; i++) {
 						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
 					}
-					
-					
-					
-					
-					e.preventDefault();	
-					var errors = [];
-					var args = $(this).serializeArray();
-					
-					$.each(args,function(i,arg){
-						if(isNaN(parseFloat(arg.value))){
-							errors.push("Please enter a number");
-						}else if( parseFloat(arg.value) < 0 ){
-							errors.push("Please a value greater than 0");
-						}else{
-							arg.value = parseFloat(arg.value);
-						}
-					});
-					if(errors.length > 0){
-						$('.errors').html('error');
-					}else{
-						$('.errors').html('');
-						var args = {
-							grossMonthlyIncome : args[0].value,
-							monthlyDebtPayment : args[1].value,
-							interestRate : args[2].value,
-							termInYears : args[3].value,
-							downPayment : args[4].value,
-							yearlyPropertyTax : args[5].value,
-							yearlyPropertyInsurance : args[6].value
-						}	
-						var results = mortgageCalculators.howMuchCanIBorrow(args);
+					// run the mortgage calculator
+					results = mortgageCalculators.howMuchCanIBorrow(args);
+					if(results.error) {
+						$(".form__error").html(results.error);
+					} else {
 						$('.js-loanAmount').html('<td class="table__cell">Loan Amount</td><td class="table__cell">'+results.conservative.loanAmount+'</td><td class="table__cell">'+results.aggressive.loanAmount+'</td>');
 						$('.js-downPayment').html('<td class="table__cell">Down Payment</td><td class="table__cell">'+results.conservative.downPayment+'</td><td class="table__cell">'+results.aggressive.downPayment+'</td>');
 						$('.js-priceOfHome').html('<td class="table__cell">Price of Home</td><td class="table__cell">'+results.conservative.priceOfHome+'</td><td class="table__cell">'+results.aggressive.priceOfHome+'</td>');
-						
 						$('.js-principalAndInterest').html('<td class="table__cell">Principal and Interest</td><td class="table__cell">'+results.futureMonthlyPayment.conservative.principalAndInterest+'</td><td class="table__cell">'+results.futureMonthlyPayment.aggressive.principalAndInterest+'</td>');
 						$('.js-taxesAndInsurance').html('<td class="table__cell">Taxes and Insurance</td><td class="table__cell">'+results.futureMonthlyPayment.conservative.taxesAndInsurance+'</td><td class="table__cell">'+results.futureMonthlyPayment.aggressive.taxesAndInsurance+'</td>');
 						$('.js-totalMonthlyPayment').html('<td class="table__cell">Total Monthly Payment</td><td class="table__cell">'+results.futureMonthlyPayment.conservative.totalMonthlyPayment+'</td><td class="table__cell">'+results.futureMonthlyPayment.aggressive.totalMonthlyPayment+'</td>');
 					}
-	
 				});
 			});
 		
@@ -69,73 +46,70 @@
 		
 	</head>
 	<body>
-		
-			<form class="form">
-				<div class="form__entry">
-					<label class="form__entry-label" >Gross Monthly Income</label>
-					<input type="text" class="form__entry-field" name="grossMonthlyIncome" id="grossMonthlyIncome" >
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Monthly Debt Payments</label>
-					<input type="text" class="form__entry-field" name="monthlyDebtPayment" id="monthlyDebtPayment" >
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Interest Rate</label>
-					<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Term (Years)</label>
-					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Down Payment (Percentage)</label>
-					<input type="text" class="form__entry-field" name="downPayment" id="downPayment">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Yearly Property Tax</label>
-					<input type="text" class="form__entry-field" name="yearlyPropertyTax" id="yearlyPropertyTax">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Yearly Property Insurance</label>
-					<input type="text" class="form__entry-field" name="yearlyPropertyInsurance" id="yearlyPropertyInsurance">
-				</div>				
-				<div class="form__buttons">
-					<button class="btn" type="submit">Calculate</button>
-					<p class="form__error"></p>
-				</div>
-			</form>
-			<div class="results">
-				<h2 class="headline headline--results">How Much Can I Afford?</h2>
-				<table class="table table-1">
-					<thead>
-						<tr>
-							<th class="table__header"></th>
-							<th class="table__header">Conservative</th>
-							<th class="table__header">Aggressive</th>
-						</tr>
-					</thead>
-					<tbody class="table-1__tbody">
-						<tr class="js-loanAmount"><td class="table__cell">Loan Amount</td></tr>
-						<tr class="js-downPayment"><td class="table__cell">Down Payment<td></tr>
-						<tr class="js-priceOfHome"><td class="table__cell">Price of Home</td></tr>
-					</tbody>
-				</table>
-				<table class="table table-2">
-					<thead>
-						<tr>
-							<th class="table__header"></th>
-							<th class="table__header">Conservative</th>
-							<th class="table__header">Aggressive</th>
-						</tr>
-					</thead>
-					<tbody class="table-2__tbody">
-						<tr class="js-principalAndInterest"><td class="table__cell">Principal and Interest</td></tr>
-						<tr class="js-taxesAndInsurance"><td class="table__cell">Taxes and Insurance<td></tr>
-						<tr class="js-totalMonthlyPayment"><td class="table__cell">Total Monthly Payment</td></tr>
-					</tbody>
-				</table>
+		<form class="form">
+			<div class="form__entry">
+				<label class="form__entry-label" >Gross Monthly Income</label>
+				<input type="text" class="form__entry-field" name="grossMonthlyIncome" id="grossMonthlyIncome" >
 			</div>
-		
-		
+			<div class="form__entry">
+				<label class="form__entry-label" >Monthly Debt Payments</label>
+				<input type="text" class="form__entry-field" name="monthlyDebtPayment" id="monthlyDebtPayment" >
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Interest Rate</label>
+				<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Term (Years)</label>
+				<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Down Payment (Percentage)</label>
+				<input type="text" class="form__entry-field" name="downPayment" id="downPayment">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Yearly Property Tax</label>
+				<input type="text" class="form__entry-field" name="yearlyPropertyTax" id="yearlyPropertyTax">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Yearly Property Insurance</label>
+				<input type="text" class="form__entry-field" name="yearlyPropertyInsurance" id="yearlyPropertyInsurance">
+			</div>				
+			<div class="form__buttons">
+				<button class="btn" type="submit">Calculate</button>
+				<p class="form__error"></p>
+			</div>
+		</form>
+		<div class="results">
+			<h2 class="headline headline--results">How Much Can I Afford?</h2>
+			<table class="table table-1">
+				<thead>
+					<tr>
+						<th class="table__header"></th>
+						<th class="table__header">Conservative</th>
+						<th class="table__header">Aggressive</th>
+					</tr>
+				</thead>
+				<tbody class="table-1__tbody">
+					<tr class="js-loanAmount"><td class="table__cell">Loan Amount</td></tr>
+					<tr class="js-downPayment"><td class="table__cell">Down Payment<td></tr>
+					<tr class="js-priceOfHome"><td class="table__cell">Price of Home</td></tr>
+				</tbody>
+			</table>
+			<table class="table table-2">
+				<thead>
+					<tr>
+						<th class="table__header"></th>
+						<th class="table__header">Conservative</th>
+						<th class="table__header">Aggressive</th>
+					</tr>
+				</thead>
+				<tbody class="table-2__tbody">
+					<tr class="js-principalAndInterest"><td class="table__cell">Principal and Interest</td></tr>
+					<tr class="js-taxesAndInsurance"><td class="table__cell">Taxes and Insurance<td></tr>
+					<tr class="js-totalMonthlyPayment"><td class="table__cell">Total Monthly Payment</td></tr>
+				</tbody>
+			</table>
+		</div>
 	</body>
 </html>

@@ -7,12 +7,11 @@
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript">
-			
 			var results;
 			
 			function clearResults() {
 				$(".form__error").html("");
-				$('.table-1__tbody, .table-2__tbody').html("");
+				$('.table-1__tbody, .table-2__tbody, .savings').html("");
 			};
 		
 			$(function(){
@@ -27,106 +26,73 @@
 					for(var i = 0; i < rawInputs.length; i++) {
 						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
 					}
-					
-					
-					
-					
-					
-					
-					e.preventDefault();	
-					var errors = [];
-					var args = $(this).serializeArray();
-					console.log(args);
-					$.each(args,function(i,arg){
-						if(isNaN(parseFloat(arg.value))){
-							errors.push("Please enter a number");
-						}else if( parseFloat(arg.value) < 0 ){
-							errors.push("Please a value greater than 0");
-						}else{
-							arg.value = parseFloat(arg.value);
-						}
-					});
-					if(errors.length > 0){
-						$('.errors').html('error');
-					}else{
-						$('.errors').html('');
-	
-						var args = {
-							loanAmount : args[0].value,
-							interestRate : args[1].value,
-							termInYears : args[2].value,
-							paymentsMade : args[3].value,
-							newInterestRate : args[4].value,
-							newTermInYears : args[5].value
-						}
-						results = mortgageCalculators.refinanceMortgage(args);
-						console.log(results);
-						 $('.table-1__tbody').html('<tr><td class="table__cell">'+results.oldMonthlyMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.oldMonthlyMortgage.remainingInterest+'</td></tr>');
-						 $('.table-2__tbody').html('<tr><td class="table__cell">'+results.newMonthlyMortgage.newMortgageTotal+'</td><td class="table__cell">'+results.newMonthlyMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.newMonthlyMortgage.remainingInterest+'</td></tr>');
-						 $('.savings').html(results.interestSaved);
+					// run the mortgage calculator
+					results = mortgageCalculators.refinanceMortgage(args);
+					if(results.error) {
+						$(".form__error").html(results.error);
+					} else {
+						$('.table-1__tbody').html('<tr><td class="table__cell">'+results.oldMonthlyMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.oldMonthlyMortgage.remainingInterest+'</td></tr>');
+						$('.table-2__tbody').html('<tr><td class="table__cell">'+results.newMonthlyMortgage.newMortgageTotal+'</td><td class="table__cell">'+results.newMonthlyMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.newMonthlyMortgage.remainingInterest+'</td></tr>');
+						$('.savings').html(results.interestSaved);
 					}
 				});
 			});
-		
 		</script>
 	</head>
 	<body>
-		
-			<form class="form">
-				<div class="form__entry">
-					<label class="form__entry-label" >Loan Amount</label>
-					<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Interest Rate</label>
-					<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Term in Years</label>
-					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Payments Made</label>
-					<input type="text" class="form__entry-field" name="paymentsMade" id="paymentsMade">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" > New Interest Rate</label>
-					<input type="text" class="form__entry-field" name="newInterestRate" id="newInterestRate">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >New Term in Years</label>
-					<input type="text" class="form__entry-field" name="newTermInYears" id="newTermInYears">
-				</div>
-				<div class="form__buttons">
-					<button class="btn" type="submit">Calculate</button>
-					<p class="form__error"></p>
-				</div>
-			</form>
-			<div class="results">
-				
-				<h2 class="headline headline--results">Old Mortgage</h2>
-				<table class="table table-1">
-					<thead>
-						<tr>
-							<th class="table__header">Monthly Mortgage Payment</th>
-							<th class="table__header">Remaining Interest</th>
-						</tr>
-					</thead>
-					<tbody class="table-1__tbody"></tbody>
-				</table>
-				<h2 class="headline headline--results">New Mortgage</h2>
-				<table class="table table-2">
-					<thead>
-						<tr>
-							<th class="table__header">New Monthly Mortgage Total</th>
-							<th class="table__header">Monthly Mortgage Payment</th>
-							<th class="table__header">Remaining Interest</th>
-						</tr>
-					</thead>
-					<tbody class="table-2__tbody"></tbody>
-				</table>
-				<p class="savings"></p>
+		<form class="form">
+			<div class="form__entry">
+				<label class="form__entry-label" >Loan Amount</label>
+				<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
 			</div>
-		
+			<div class="form__entry">
+				<label class="form__entry-label" >Interest Rate</label>
+				<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Term in Years</label>
+				<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Payments Made</label>
+				<input type="text" class="form__entry-field" name="paymentsMade" id="paymentsMade">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" > New Interest Rate</label>
+				<input type="text" class="form__entry-field" name="newInterestRate" id="newInterestRate">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >New Term in Years</label>
+				<input type="text" class="form__entry-field" name="newTermInYears" id="newTermInYears">
+			</div>
+			<div class="form__buttons">
+				<button class="btn" type="submit">Calculate</button>
+				<p class="form__error"></p>
+			</div>
+		</form>
+		<div class="results">
+			<h2 class="headline headline--results">Old Mortgage</h2>
+			<table class="table table-1">
+				<thead>
+					<tr>
+						<th class="table__header">Monthly Mortgage Payment</th>
+						<th class="table__header">Remaining Interest</th>
+					</tr>
+				</thead>
+				<tbody class="table-1__tbody"></tbody>
+			</table>
+			<h2 class="headline headline--results">New Mortgage</h2>
+			<table class="table table-2">
+				<thead>
+					<tr>
+						<th class="table__header">New Monthly Mortgage Total</th>
+						<th class="table__header">Monthly Mortgage Payment</th>
+						<th class="table__header">Remaining Interest</th>
+					</tr>
+				</thead>
+				<tbody class="table-2__tbody"></tbody>
+			</table>
+			<p class="savings"></p>
+		</div>
 	</body>
 </html>

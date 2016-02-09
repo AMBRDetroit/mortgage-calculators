@@ -7,7 +7,6 @@
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript">
-			
 			var results;
 		
 			function clearResults() {
@@ -27,42 +26,19 @@
 					for(var i = 0; i < rawInputs.length; i++) {
 						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
 					}
-					
-					
-					e.preventDefault();	
-					var errors = [];
-					var args = $(this).serializeArray();
-					
-					$.each(args,function(i,arg){
-						if(isNaN(parseFloat(arg.value))){
-							errors.push("Please enter a number");
-						}else if( parseFloat(arg.value) < 1 ){
-							errors.push("Please a value greater than 0");
-						}else{
-							arg.value = parseFloat(arg.value);
-						}
-					});
-					if(errors.length > 0){
-						$('.errors').html('error');
-					}else{
-						$('.errors').html('');
-						var args = {
-							loanAmount : args[0].value,
-							interestRate1 : args[1].value,
-							interestRate2 : args[2].value
-						}
-						results = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
+					// run the mortgage calculator
+					results = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
+					if(results.error) {
+						$(".form__error").html(results.error);
+					} else {
 						$('.table-1__tbody').html('<tr><td class="table__cell">'+results.fifteenYearMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.fifteenYearMortgage.totalInterest+'</td><td class="table__cell">'+results.fifteenYearMortgage.totalPayments+'</td></tr>');
-						 $('.table-2__tbody').html('<tr><td class="table__cell">'+results.thirtyYearMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalInterest+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalPayments+'</td></tr>');
+						$('.table-2__tbody').html('<tr><td class="table__cell">'+results.thirtyYearMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalInterest+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalPayments+'</td></tr>');
 					}
 				});
 			});
-		
 		</script>
-		
 	</head>
 	<body>
-		
 		<form class="form">
 			<div class="form__entry">
 				<label class="form__entry-label" >Loan Amount</label>
@@ -105,6 +81,5 @@
 				<tbody class="table-2__tbody"></tbody>
 			</table>
 		</div>
-		
 	</body>
 </html>
