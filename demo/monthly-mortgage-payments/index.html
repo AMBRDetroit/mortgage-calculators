@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../styles.css" type="text/css" >
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="../../src/mortgage-calculators.js"></script>
-		<script>
+		<script type="text/javascript">
 			$(function(){
 				
 				$('body').on('submit','form',{},function(e){
@@ -33,7 +33,7 @@
 							termInYears : args[2].value	
 						}
 						
-						var results = mortgageCalculator.monthlyMortgagePayments(args);
+						var results = mortgageCalculators.monthlyMortgagePayments(args);
 						$('.results').html('<p> Monthly mortgage payments of ' + results + '</p>')
 					}
 	
@@ -43,7 +43,7 @@
 		</script>
 	</head>
 	<body>
-		<div class="container">
+		
 			<form class="form">
 				<div class="form__entry">
 					<label class="form__entry-label" >Loan Amount</label>
@@ -57,12 +57,15 @@
 					<label class="form__entry-label" >Term (Years)</label>
 					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
 				</div>
-				<button class="btn" type="submit">Calculate</button>
+				<div class="form__buttons">
+					<button class="btn" type="submit">Calculate</button>
+					<p class="form__error"></p>
+				</div>
 			</form>
-			<p class="errors"></p>
+			
 			<div class="results">
 				
 			</div>
-		</div>
+		
 	</body>
 </html>

@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../styles.css" type="text/css">
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script>
+		<script type="text/javascript">
 			$(function(){
 				var results;
 				$('body').on('submit','form',{},function(e){
@@ -48,7 +48,7 @@
 		</script>
 	</head>
 	<body>
-		<div class="container">
+		
 			<form class="form">
 				<div class="form__entry">
 					<label class="form__entry-label" >Loan Amount</label>
@@ -74,35 +74,36 @@
 					<label class="form__entry-label" >New Term in Years</label>
 					<input type="text" class="form__entry-field" name="newTermInYears" id="newTermInYears">
 				</div>
-				<button class="btn" type="submit">Calculate</button>
+				<div class="form__buttons">
+					<button class="btn" type="submit">Calculate</button>
+					<p class="form__error"></p>
+				</div>
 			</form>
 			<div class="results">
-				<p class="errors"></p>
-				<h2>Old Mortgage</h2>
-				<table class="table-1">
+				
+				<h2 class="headline headline--results">Old Mortgage</h2>
+				<table class="table table-1">
 					<thead>
 						<tr>
-							<th> Monthly Mortgage Payment </th>
-							<th> Remaining Interest </th>
+							<th class="table__header">Monthly Mortgage Payment</th>
+							<th class="table__header">Remaining Interest</th>
 						</tr>
 					</thead>
-					<tbody class="table-1__tbody">
-					</tbody>
+					<tbody class="table-1__tbody"></tbody>
 				</table>
-				<h2>New Mortgage</h2>
-				<table class="table-2">
+				<h2 class="headline headline--results">New Mortgage</h2>
+				<table class="table table-2">
 					<thead>
 						<tr>
-							<th> New Monthly Mortgage Total </th>
-							<th> Monthly Mortgage Payment </th>
-							<th> Remaining Interest </th>
+							<th class="table__header">New Monthly Mortgage Total</th>
+							<th class="table__header">Monthly Mortgage Payment</th>
+							<th class="table__header">Remaining Interest</th>
 						</tr>
 					</thead>
-					<tbody class="table-2__tbody">
-					</tbody>
+					<tbody class="table-2__tbody"></tbody>
 				</table>
 				<p class="savings"></p>
 			</div>
-		</div>
+		
 	</body>
 </html>

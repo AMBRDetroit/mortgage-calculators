@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="../styles.css" type="text/css">
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script>
+		<script type="text/javascript">
 			$(function(){
 				var results;
 				$('body').on('submit','form',{},function(e){
@@ -51,7 +51,7 @@
 		</script>
 	</head>
 	<body>
-		<div class="container">
+		
 			<form class="form">
 				<div class="form__entry">
 					<label class="form__entry-label" >Monthly Rent</label>
@@ -93,27 +93,28 @@
 					<label class="form__entry-label" >Income Tax(%)</label>
 					<input type="text" class="form__entry-field" name="incomeTaxRate" id="incomeTaxRate">
 				</div>
-				<button class="btn" type="submit">Calculate</button>
+				<div class="form__buttons">
+					<button class="btn" type="submit">Calculate</button>
+					<p class="form__error"></p>
+				</div>
 			</form>
 			<div class="results">
-				<p class="errors"></p>
-				<h2>Rent Vs Buy</h2>
-				<table class="table-1">
+				<h2 class="headline headline--results">Rent Vs Buy</h2>
+				<table class="table table-1">
 					<thead>
 						<tr>
-							<th> Current Value Of Home </th>
-							<th> Total Owed To Bank </th>
-							<th> Equity On Home </th>
-							<th> Saving When Renting </th>
-							<th> Transactional Costs </th>
-							<th> Net Cost Of Ownership </th>
-							<th> Money Saved By Buying </th>
+							<th class="table__header">Current Value Of Home</th>
+							<th class="table__header">Total Owed To Bank</th>
+							<th class="table__header">Equity On Home</th>
+							<th class="table__header">Saving When Renting</th>
+							<th class="table__header">Transactional Costs</th>
+							<th class="table__header">Net Cost Of Ownership</th>
+							<th class="table__header">Money Saved By Buying</th>
 						</tr>
 					</thead>
-					<tbody class="table-1__tbody">
-					</tbody>
+					<tbody class="table-1__tbody"></tbody>
 				</table>
 			</div>
-		</div>
+	
 	</body>
 </html>
