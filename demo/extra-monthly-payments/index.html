@@ -35,7 +35,6 @@
 						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
 					}
 					
-					console.log(args);
 					// run the mortgage calculator
 					results = mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments(args);
 					if(results.error) {

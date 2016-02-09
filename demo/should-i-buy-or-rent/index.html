@@ -7,9 +7,33 @@
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript">
+			
+			var results;
+			
+			function clearResults() {
+				$(".form__error").html("");
+				$('.table-1__tbody, .table-2__tbody').html("");
+			};
+		
 			$(function(){
-				var results;
 				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					// clear previous results
+					clearResults();
+					// get our inputs
+					var rawInputs = $(this).serializeArray();
+					// convert these to numbers and create our argument array
+					var args = {};
+					for(var i = 0; i < rawInputs.length; i++) {
+						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
+					}
+					
+					
+					
+					
+					
+					
+					
 					e.preventDefault();	
 					var errors = [];
 					var args = $(this).serializeArray();

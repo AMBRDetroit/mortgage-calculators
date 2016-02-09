@@ -7,9 +7,25 @@
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="../../src/mortgage-calculators.js"></script>
 		<script type="text/javascript">
-			$(function(){
+			var results;
+		
+			$(function() {
 				
 				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					// clear previous results
+					clearResults();
+					// get our inputs
+					var rawInputs = $(this).serializeArray();
+					// convert these to numbers and create our argument array
+					var args = {};
+					for(var i = 0; i < rawInputs.length; i++) {
+						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
+					}
+					
+					
+					
+					
 					e.preventDefault();	
 					var errors = [];
 					var args = $(this).serializeArray();
@@ -99,9 +115,9 @@
 						</tr>
 					</thead>
 					<tbody class="table-1__tbody">
-						<tr class="js-loanAmount"><td>Loan Amount</td></tr>
-						<tr class="js-downPayment"><td>Down Payment<td></tr>
-						<tr class="js-priceOfHome"><td>Price of Home</td></tr>
+						<tr class="js-loanAmount"><td class="table__cell">Loan Amount</td></tr>
+						<tr class="js-downPayment"><td class="table__cell">Down Payment<td></tr>
+						<tr class="js-priceOfHome"><td class="table__cell">Price of Home</td></tr>
 					</tbody>
 				</table>
 				<table class="table table-2">
@@ -113,9 +129,9 @@
 						</tr>
 					</thead>
 					<tbody class="table-2__tbody">
-						<tr class="js-principalAndInterest"><td>Principal and Interest</td></tr>
-						<tr class="js-taxesAndInsurance"><td>Taxes and Insurance<td></tr>
-						<tr class="js-totalMonthlyPayment"><td>Total Monthly Payment</td></tr>
+						<tr class="js-principalAndInterest"><td class="table__cell">Principal and Interest</td></tr>
+						<tr class="js-taxesAndInsurance"><td class="table__cell">Taxes and Insurance<td></tr>
+						<tr class="js-totalMonthlyPayment"><td class="table__cell">Total Monthly Payment</td></tr>
 					</tbody>
 				</table>
 			</div>
