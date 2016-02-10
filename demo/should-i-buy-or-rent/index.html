@@ -32,7 +32,8 @@
 					if(results.error) {
 						$(".form__error").html(results.error);
 					} else {
-						$('.table-1__tbody').html('<tr><td class="table__cell">'+results.currentValueOfHome+'</td><td class="table__cell">'+results.totalOwedToBank+'</td><td class="table__cell">'+results.equityOnHome+'</td><td class="table__cell">'+results.savingWhenRenting+'</td><td class="table__cell">'+results.transactionalCosts+'</td><td class="table__cell">'+results.netCostOfOwnership+'</td><td class="table__cell">'+results.moneySavedByBuying+'</td></tr>');
+						console.log(results);
+						$('.table-1__tbody').html('<tr><td class="table__cell">'+results.currentValueOfHome+'</td><td class="table__cell">'+results.totalOwedToBank+'</td><td class="table__cell">'+results.equityOnHome+'</td><td class="table__cell">'+results.netCostOfBuying+'</td><td class="table__cell">'+results.netCostOfRenting+'</td><td class="table__cell">'+results.benefitOfBuying+'</td></tr>');
 					}
 				});
 			});
@@ -56,6 +57,10 @@
 			<div class="form__entry">
 				<label class="form__entry-label" >Down Payment (percentage)</label>
 				<input type="text" class="form__entry-field" name="downPayment" id="downPayment" >
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Closing Costs (percentage)</label>
+				<input type="text" class="form__entry-field" name="closingCosts" id="closingCosts" >
 			</div>
 			<div class="form__entry">
 				<label class="form__entry-label" >Interest Rate</label>
@@ -94,10 +99,9 @@
 						<th class="table__header">Current Value Of Home</th>
 						<th class="table__header">Total Owed To Bank</th>
 						<th class="table__header">Equity On Home</th>
-						<th class="table__header">Saving When Renting</th>
-						<th class="table__header">Transactional Costs</th>
-						<th class="table__header">Net Cost Of Ownership</th>
-						<th class="table__header">Money Saved By Buying</th>
+						<th class="table__header">Net Cost of Buying</th>
+						<th class="table__header">Net Cost Of Renting</th>
+						<th class="table__header">Benefit Of Buying</th>
 					</tr>
 				</thead>
 				<tbody class="table-1__tbody"></tbody>
