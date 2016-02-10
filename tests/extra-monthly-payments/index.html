@@ -220,13 +220,21 @@
 			
 			// test the actual calculations
 			QUnit.module('Calculations');
-			QUnit.test("Extra Monthly Mortgage Payments", function(assert) {
+			QUnit.test("Monthly Mortgage Payments With Extra Payments", function(assert) {
 				assert.deepEqual(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
 					loanAmount : 200000,
 					interestRate : 6.75,
 					termInYears : 5,
 					extraPaymentAmount : 300
 				}), response1 , "200,000 @ 6.75% for 5 years ");
+			});
+			QUnit.test("Monthly Mortgage Payments Without Extra Payments", function(assert) {
+				assert.deepEqual(mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments({
+					loanAmount : 200000,
+					interestRate : 6.75,
+					termInYears : 5,
+					extraPaymentAmount : 0
+				}), response2 , "200,000 @ 6.75% for 5 years ");	
 			});	
 		</script>
 	</head>

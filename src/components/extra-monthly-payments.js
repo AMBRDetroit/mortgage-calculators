@@ -52,11 +52,33 @@ window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments = function(a
 		termInYears : args.termInYears
 	});
 	var remainingBalance = args.loanAmount;
+	var totalCostWithoutExtraPayments = 0;
+	// calculate monthly payment without extra payments breakdowns against the number of monthly payments
+	for(var i = 0; i<= numberOfMonthlyPayments; i++){
+		var monthlyInterestPayment = calculateMonthlyInterestPayment(monthlyInterestRate,remainingBalance);
+		var monthlyPrincipalPayment = monthlyMortgagePayment - monthlyInterestPayment;
+		// if the total monthly payment is no longer less than remaining balance, then we are at our last payment
+		if( (remainingBalance - monthlyPrincipalPayment) >= 0 ){
+			if(remainingBalance >= monthlyMortgagePayment){
+				remainingBalance -= monthlyPrincipalPayment;
+			}
+		}else{
+			monthlyMortgagePayment = remainingBalance;
+			remainingBalance -= monthlyMortgagePayment;
+		}
+		// as long as remaining balance is greater than zero, lets keep adding it up
+		if(remainingBalance > 0){
+			totalCostWithoutExtraPayments += monthlyMortgagePayment;
+		}
+	}
 	// initialize the total montlh payment
 	var totalMonthlyPayment =  monthlyMortgagePayment + extraPaymentAmount;
+	
+	// reset that remaining balance to calculate payments with extra payments
+	remainingBalance = args.loanAmount;
 	// initialize monthly payments breakdown array
 	var monthlyPayments = [];
-	// calculate monthly payment breakdowns against the number of monthly payments
+	// calculate monthly payment with extra payments breakdowns against the number of monthly payments
 	for(var i = 0; i<= numberOfMonthlyPayments; i++){
 		var monthlyInterestPayment = calculateMonthlyInterestPayment(monthlyInterestRate,remainingBalance);
 		var monthlyPrincipalPayment = monthlyMortgagePayment - monthlyInterestPayment + extraPaymentAmount;
@@ -117,6 +139,7 @@ window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments = function(a
 			monthlyBreakdown : annualPayments[k]
 		});
 	}
+
 	// build response object
 	var response = { 
 		withExtraPayment : {
@@ -130,7 +153,7 @@ window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments = function(a
 			totalMonthlyPayment : formatResult(monthlyMortgagePayment),
 			interestRate : args.interestRate,
 			term : args.termInYears,
-			totalCost : formatResult(monthlyMortgagePayment * numberOfMonthlyPayments)
+			totalCost : formatResult(totalCostWithoutExtraPayments)
 		}
 	};
 	return response;

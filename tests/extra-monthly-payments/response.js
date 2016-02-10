@@ -310,10 +310,435 @@ var response1 = {
 		totalMonthlyPayment : 3936.69,
 		interestRate : 6.75,
 		term : 5,
-		totalCost : 236201.53
+		totalCost : 240138.22
 	}
 };
 
+// response without extra payments made
+var response2 = {
+	  withExtraPayment: {
+	    interestRate: 6.75,
+	    term: 5,
+	    totalCost: 240138.22,
+	    totalMonthlyPayment: 3936.69,
+	    payments: [
+	      {
+	        annualInterestPayment: 12436.33,
+	        annualPrincipalPayment: 34803.97,
+	        balance: 165196.03,
+	        monthlyBreakdown: [
+	          {
+	            balance: 197188.31,
+	            interestPayment: 1125,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2811.69
+	          },
+	          {
+	            balance: 194360.8,
+	            interestPayment: 1109.18,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2827.51
+	          },
+	          {
+	            balance: 191517.39,
+	            interestPayment: 1093.28,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2843.41
+	          },
+	          {
+	            balance: 188657.98,
+	            interestPayment: 1077.29,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2859.41
+	          },
+	          {
+	            balance: 185782.49,
+	            interestPayment: 1061.2,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2875.49
+	          },
+	          {
+	            balance: 182890.82,
+	            interestPayment: 1045.03,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2891.67
+	          },
+	          {
+	            balance: 179982.89,
+	            interestPayment: 1028.76,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2907.93
+	          },
+	          {
+	            balance: 177058.6,
+	            interestPayment: 1012.4,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2924.29
+	          },
+	          {
+	            balance: 174117.87,
+	            interestPayment: 995.95,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2940.74
+	          },
+	          {
+	            balance: 171160.59,
+	            interestPayment: 979.41,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2957.28
+	          },
+	          {
+	            balance: 168186.67,
+	            interestPayment: 962.78,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2973.91
+	          },
+	          {
+	            balance: 165196.03,
+	            interestPayment: 946.05,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 2990.64
+	          }
+	        ]
+	      },
+	      {
+	        annualInterestPayment: 10013.02,
+	        annualPrincipalPayment: 37227.28,
+	        balance: 127968.75,
+	        monthlyBreakdown: [
+	          {
+	            balance: 162188.57,
+	            interestPayment: 929.23,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3007.46
+	          },
+	          {
+	            balance: 159164.19,
+	            interestPayment: 912.31,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3024.38
+	          },
+	          {
+	            balance: 156122.79,
+	            interestPayment: 895.3,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3041.39
+	          },
+	          {
+	            balance: 153064.29,
+	            interestPayment: 878.19,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3058.5
+	          },
+	          {
+	            balance: 149988.59,
+	            interestPayment: 860.99,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3075.71
+	          },
+	          {
+	            balance: 146895.58,
+	            interestPayment: 843.69,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3093.01
+	          },
+	          {
+	            balance: 143785.17,
+	            interestPayment: 826.29,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3110.4
+	          },
+	          {
+	            balance: 140657.27,
+	            interestPayment: 808.79,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3127.9
+	          },
+	          {
+	            balance: 137511.78,
+	            interestPayment: 791.2,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3145.49
+	          },
+	          {
+	            balance: 134348.59,
+	            interestPayment: 773.5,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3163.19
+	          },
+	          {
+	            balance: 131167.61,
+	            interestPayment: 755.71,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3180.98
+	          },
+	          {
+	            balance: 127968.73,
+	            interestPayment: 737.82,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3198.87
+	          }
+	        ]
+	      },
+	      {
+	        annualInterestPayment: 7420.95,
+	        annualPrincipalPayment: 39819.37,
+	        balance: 88149.38,
+	        monthlyBreakdown: [
+	          {
+	            balance: 124751.87,
+	            interestPayment: 719.82,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3216.87
+	          },
+	          {
+	            balance: 121516.9,
+	            interestPayment: 701.73,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3234.96
+	          },
+	          {
+	            balance: 118263.74,
+	            interestPayment: 683.53,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3253.16
+	          },
+	          {
+	            balance: 114992.29,
+	            interestPayment: 665.23,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3271.46
+	          },
+	          {
+	            balance: 111702.43,
+	            interestPayment: 646.83,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3289.86
+	          },
+	          {
+	            balance: 108394.06,
+	            interestPayment: 628.33,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3308.37
+	          },
+	          {
+	            balance: 105067.08,
+	            interestPayment: 609.72,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3326.98
+	          },
+	          {
+	            balance: 101721.39,
+	            interestPayment: 591,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3345.69
+	          },
+	          {
+	            balance: 98356.88,
+	            interestPayment: 572.18,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3364.51
+	          },
+	          {
+	            balance: 94973.45,
+	            interestPayment: 553.26,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3383.43
+	          },
+	          {
+	            balance: 91570.98,
+	            interestPayment: 534.23,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3402.47
+	          },
+	          {
+	            balance: 88149.38,
+	            interestPayment: 515.09,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3421.61
+	          }
+	        ]
+	      },
+	      {
+	        annualInterestPayment: 4648.43,
+	        annualPrincipalPayment: 42591.89,
+	        balance: 45557.49,
+	        monthlyBreakdown: [
+	          {
+	            balance: 84708.53,
+	            interestPayment: 495.84,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3440.85
+	          },
+	          {
+	            balance: 81248.32,
+	            interestPayment: 476.49,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3460.21
+	          },
+	          {
+	            balance: 77768.65,
+	            interestPayment: 457.02,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3479.67
+	          },
+	          {
+	            balance: 74269.41,
+	            interestPayment: 437.45,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3499.24
+	          },
+	          {
+	            balance: 70750.48,
+	            interestPayment: 417.77,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3518.93
+	          },
+	          {
+	            balance: 67211.76,
+	            interestPayment: 397.97,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3538.72
+	          },
+	          {
+	            balance: 63653.13,
+	            interestPayment: 378.07,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3558.63
+	          },
+	          {
+	            balance: 60074.49,
+	            interestPayment: 358.05,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3578.64
+	          },
+	          {
+	            balance: 56475.72,
+	            interestPayment: 337.92,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3598.77
+	          },
+	          {
+	            balance: 52856.7,
+	            interestPayment: 317.68,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3619.02
+	          },
+	          {
+	            balance: 49217.33,
+	            interestPayment: 297.32,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3639.37
+	          },
+	          {
+	            balance: 45557.48,
+	            interestPayment: 276.85,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3659.84
+	          }
+	        ]
+	      },
+	      {
+	        annualInterestPayment: 1682.83,
+	        annualPrincipalPayment: 45557.48,
+	        balance: 0.01,
+	        monthlyBreakdown: [
+	          {
+	            balance: 41877.05,
+	            interestPayment: 256.26,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3680.43
+	          },
+	          {
+	            balance: 38175.92,
+	            interestPayment: 235.56,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3701.13
+	          },
+	          {
+	            balance: 34453.96,
+	            interestPayment: 214.74,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3721.95
+	          },
+	          {
+	            balance: 30711.08,
+	            interestPayment: 193.8,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3742.89
+	          },
+	          {
+	            balance: 26947.13,
+	            interestPayment: 172.75,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3763.94
+	          },
+	          {
+	            balance: 23162.02,
+	            interestPayment: 151.58,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3785.11
+	          },
+	          {
+	            balance: 19355.61,
+	            interestPayment: 130.29,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3806.41
+	          },
+	          {
+	            balance: 15527.8,
+	            interestPayment: 108.88,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3827.82
+	          },
+	          {
+	            balance: 11678.45,
+	            interestPayment: 87.34,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3849.35
+	          },
+	          {
+	            balance: 7807.45,
+	            interestPayment: 65.69,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3871
+	          },
+	          {
+	            balance: 3914.67,
+	            interestPayment: 43.92,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3892.78
+	          },
+	          {
+	            balance: 3914.67,
+	            interestPayment: 22.02,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3914.67
+	          }
+	        ]
+	      },
+	      {
+	        annualInterestPayment: 22.02,
+	        annualPrincipalPayment: 0.01,
+	        balance: 0,
+	        monthlyBreakdown: [
+	          {
+	            balance: 3914.67,
+	            interestPayment: 22.02,
+	            monthlyPayment: 3936.69,
+	            principalPayment: 3914.67
+	          }
+	        ]
+	      }
+	    ]
+	  },
+	  withoutExtraPayment: {
+	    interestRate: 6.75,
+	    term: 5,
+	    totalCost: 240138.22,
+	    totalMonthlyPayment: 3936.69
+	  }
+	}
 
 
 
