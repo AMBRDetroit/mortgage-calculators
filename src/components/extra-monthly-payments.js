@@ -53,18 +53,19 @@ window.mortgageCalculators.monthlyMortgagePaymentsWithExtraPayments = function(a
 	});
 	var remainingBalance = args.loanAmount;
 	var totalCostWithoutExtraPayments = 0;
+	var totalMonthlyPaymentWithoutExtraPayments = monthlyMortgagePayment;
 	// calculate monthly payment without extra payments breakdowns against the number of monthly payments
 	for(var i = 0; i<= numberOfMonthlyPayments; i++){
 		var monthlyInterestPayment = calculateMonthlyInterestPayment(monthlyInterestRate,remainingBalance);
 		var monthlyPrincipalPayment = monthlyMortgagePayment - monthlyInterestPayment;
 		// if the total monthly payment is no longer less than remaining balance, then we are at our last payment
 		if( (remainingBalance - monthlyPrincipalPayment) >= 0 ){
-			if(remainingBalance >= monthlyMortgagePayment){
+			if(remainingBalance >= totalMonthlyPaymentWithoutExtraPayments){
 				remainingBalance -= monthlyPrincipalPayment;
 			}
 		}else{
-			monthlyMortgagePayment = remainingBalance;
-			remainingBalance -= monthlyMortgagePayment;
+			totalMonthlyPaymentWithoutExtraPayments = remainingBalance;
+			remainingBalance -= totalMonthlyPaymentWithoutExtraPayments;
 		}
 		// as long as remaining balance is greater than zero, lets keep adding it up
 		if(remainingBalance > 0){
