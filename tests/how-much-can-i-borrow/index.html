@@ -7,12 +7,530 @@
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgageCalculators.js"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
-			// Calculate Monthly Mortgage Payments
+			
+			QUnit.config.reorder = false;
 			QUnit.dump.maxDepth = 6;
+			
+			// validate the inputs
+			QUnit.module('Input Validation');
+			QUnit.test("grossMonthlyIncome", function(assert) {
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : "aaa",
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : "123.45",
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : "",
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : -10,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 0,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 2541.23,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("interestRate", function(assert) {
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : "aaa",
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : "2.45",
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : "",
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : -1,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 0,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 5,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("termInYears", function(assert) {
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : "abc",
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : "30",
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : "",
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : -1,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : "",
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 5,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 12.5,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Float not accepted accepted.");
+			});
+			QUnit.test("downPayment", function(assert) {
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : "abc",
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : "5",
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : "",
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : -10,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 0,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 10,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5.56,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("monthlyDebtPayment", function(assert) {
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  "abc",
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  "100",
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  "",
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  -10,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  0,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  325.25,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("yearlyPropertyTax", function(assert) {
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : "abc",
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : "12",
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : "",
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : -10,
+					yearlyPropertyInsurance : 0
+				}).error != undefined, true, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 19,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 50.20,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("yearlyPropertyInsurance", function(assert) {
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : "abc"
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : "123"
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : ""
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : -10
+				}).error != undefined, true, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 0
+				}).error, undefined, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 100
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 0,
+					yearlyPropertyInsurance : 250.15
+				}).error, undefined, "Float accepted.");
+			});
+
+			// do the calculations
+			QUnit.module('Calculations');
 			QUnit.test("How Much Can I Borrow?", function(assert) {
-				var args = {
+				assert.deepEqual(mortgageCalculators.howMuchCanIBorrow({
 					interestRate : 3.75,
 					grossMonthlyIncome : 4000,
 					monthlyDebtPayment :  400,
@@ -20,10 +538,16 @@
 					downPayment : 5,
 					yearlyPropertyTax : 0,
 					yearlyPropertyInsurance : 0		
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.howMuchCanIBorrow(args);
-				assert.deepEqual(result, response , "+4000/month - 400/month with 5% down payment for 30 years @ 3.75%");
+				}), response1, "+4000/month - 400/month with 5% down payment for 30 years @ 3.75%");
+				assert.deepEqual(mortgageCalculators.howMuchCanIBorrow({
+					interestRate : 3.75,
+					grossMonthlyIncome : 4000,
+					monthlyDebtPayment :  400,
+					termInYears : 30,
+					downPayment : 5,
+					yearlyPropertyTax : 1200,
+					yearlyPropertyInsurance : 1200		
+				}), response2, "with yearly property tax and insurance");
 			});	
 		</script>
 	</head>

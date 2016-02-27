@@ -1,4 +1,4 @@
-var response = {
+var response1 = {
 	interestSaved : 16899.79,
 	oldMonthlyMortgage : {
 		monthlyMortgagePayment : 463.12,
@@ -10,4 +10,3 @@ var response = {
 		remainingInterest : 46103.21
 	}
 };
-

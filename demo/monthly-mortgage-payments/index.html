@@ -3,70 +3,59 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Monthly Mortgage Calculator</title>
+		<link rel="stylesheet" href="../styles.css" type="text/css" >
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-		<script src="../../src/mortgageCalculator.js"></script>
-		<style>
-			body{margin:0;padding:0;font-size:16px;}
-			.container{width:80%;margin:0 auto;}
-			.form{background-color:#ccc;padding:50px;}
-			.form__entry{margin:10px 0;}
-			.form__entry-label{font-weight:bold; display:block;}
-			.form__entry-field{ padding:10px 0; border-radius:5px;}
-			.btn{background-color:#0053A0; padding:14px 20px;color:#FFF; border:transparent;border-radius:5px;font-size:1rem;}
-		</style>
+		<script src="../../src/mortgage-calculators.js"></script>
+		<script type="text/javascript">
+			var results;
+			
+			function clearResults() {
+				$(".form__error").html("");
+				$('.results').html("");
+			};
 		
-	</head>
-	<body>
-		<div class="container">
-			<form class="form">
-				<div class="form__entry">
-					<label class="form__entry-label" >Loan Amount</label>
-					<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Interest Rate</label>
-					<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
-				</div>
-				<div class="form__entry">
-					<label class="form__entry-label" >Term (Years)</label>
-					<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
-				</div>
-				<button class="btn" type="submit">Calculate</button>
-			</form>
-			<div class="results">
-				
-			</div>
-		</div>
-		<script>
 			$(function(){
-				
 				$('body').on('submit','form',{},function(e){
 					e.preventDefault();	
-					var errors = [];
-					var args = $(this).serializeArray();
-					
-					$.each(args,function(i,arg){
-						if(isNaN(parseFloat(arg.value))){
-							errors.push("Please enter a number");
-						}else if( parseFloat(arg.value) < 1 ){
-							errors.push("Please a value greater than 0");
-						}else{
-							arg.value = parseFloat(arg.value);
-						}
-					});
-					if(errors.length > 0){
-						console.log(errors);
-					}else{
-						var loanAmount = args[0].value;
-						var interestRate = args[1].value;
-						var termInYears = args[2].value;	
-						var results = mtgcalculator.monthlyMortgageCalculator(loanAmount,interestRate,termInYears);
+					// clear previous results
+					clearResults();
+					// get our inputs
+					var rawInputs = $(this).serializeArray();
+					// convert these to numbers and create our argument array
+					var args = {};
+					for(var i = 0; i < rawInputs.length; i++) {
+						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
+					}
+					// run the mortgage calculator
+					results = mortgageCalculators.monthlyMortgagePayments(args);
+					if(results.error) {
+						$(".form__error").html(results.error);
+					} else {
 						$('.results').html('<p> Monthly mortgage payments of ' + results + '</p>')
 					}
-	
 				});
 			});
-		
 		</script>
+	</head>
+	<body>
+		<form class="form">
+			<div class="form__entry">
+				<label class="form__entry-label" >Loan Amount</label>
+				<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Interest Rate</label>
+				<input type="text" class="form__entry-field" name="interestRate" id="interestRate">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Term (Years)</label>
+				<input type="text" class="form__entry-field" name="termInYears" id="termInYears">
+			</div>
+			<div class="form__buttons">
+				<button class="btn" type="submit">Calculate</button>
+				<p class="form__error"></p>
+			</div>
+		</form>
+		<div class="results"></div>
 	</body>
 </html>

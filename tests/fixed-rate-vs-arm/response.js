@@ -1,4 +1,4 @@
-var response = {
+var response1 = {
 		fixedRate : {
 			monthlyMortgagePayment : 632.07
 		},

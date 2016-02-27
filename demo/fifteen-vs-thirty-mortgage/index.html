@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Monthly Mortgage with Extra Monthly Payments Calculator</title>
+		<link rel="stylesheet" href="../styles.css" type="text/css">
+		<script src="../../src/mortgage-calculators.js"></script>
+		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+			var results;
+		
+			function clearResults() {
+				$(".form__error").html("");
+				$('.table-1__tbody, .table-2__tbody').html("");
+			};
+		
+			$(function(){
+				$('body').on('submit','form',{},function(e){
+					e.preventDefault();	
+					// clear previous results
+					clearResults();
+					// get our inputs
+					var rawInputs = $(this).serializeArray();
+					// convert these to numbers and create our argument array
+					var args = {};
+					for(var i = 0; i < rawInputs.length; i++) {
+						args[rawInputs[i].name] = parseFloat(rawInputs[i].value);
+					}
+					// run the mortgage calculator
+					results = mortgageCalculators.compareFifteenVsThirtyYearMortgages(args);
+					if(results.error) {
+						$(".form__error").html(results.error);
+					} else {
+						$('.table-1__tbody').html('<tr><td class="table__cell">'+results.fifteenYearMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.fifteenYearMortgage.totalInterest+'</td><td class="table__cell">'+results.fifteenYearMortgage.totalPayments+'</td></tr>');
+						$('.table-2__tbody').html('<tr><td class="table__cell">'+results.thirtyYearMortgage.monthlyMortgagePayment+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalInterest+'</td><td class="table__cell">'+results.thirtyYearMortgage.totalPayments+'</td></tr>');
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<form class="form">
+			<div class="form__entry">
+				<label class="form__entry-label" >Loan Amount</label>
+				<input type="text" class="form__entry-field" name="loanAmount" id="loanAmount" >
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Interest Rate for 15 year</label>
+				<input type="text" class="form__entry-field" name="interestRate1" id="interestRate1">
+			</div>
+			<div class="form__entry">
+				<label class="form__entry-label" >Interest Rate for 30 year</label>
+				<input type="text" class="form__entry-field" name="interestRate2" id="interestRate2">
+			</div>
+			<div class="form__buttons">
+				<button class="btn" type="submit">Calculate</button>
+				<p class="form__error"></p>
+			</div>
+		</form>
+		<div class="results">
+			<h2 class="headline headline--results">15 Year Mortgage</h2>
+			<table class="table table-1">
+				<thead>
+					<tr>
+						<th class="table__header">Monthly Mortgage Payment</th>
+						<th class="table__header">Total Payments</th>
+						<th class="table__header">Total Interest</th>
+					</tr>
+				</thead>
+				<tbody class="table-1__tbody"></tbody>
+			</table>
+			<h2 class="headline headline--results">30 Year Mortgage</h2>
+			<table class="table-2">
+				<thead>
+					<tr>
+						<th class="table__header">Monthly Mortgage Payment</th>
+						<th class="table__header">Total Interest</th>
+						<th class="table__header">Total Payments</th>
+					</tr>
+				</thead>
+				<tbody class="table-2__tbody"></tbody>
+			</table>
+		</div>
+	</body>
+</html>

@@ -2,17 +2,759 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Fixed vs ARM</title>
+		<title>Rent Vs Buy</title>
 		<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.20.0.css">
 		<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="//code.jquery.com/qunit/qunit-1.20.0.js"></script>
 		<script src="response.js"></script>
-		<script src="../../src/mortgageCalculators.js"></script>
+		<script src="../../src/mortgage-calculators.js"></script>
 		<script>
-			// Calculate Monthly Mortgage Payments
+		
+			QUnit.config.reorder = false;
 			QUnit.dump.maxDepth = 6;
-			QUnit.test("Rent Vs Own", function(assert) {
-				var args = {
+		
+			// validate the inputs
+			QUnit.module('Input Validation');
+			QUnit.test("monthlyRent", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : "abc",
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : "800",
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : "",
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : -5,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 0,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 750.75,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("purchasePrice", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : "abc",
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : "200000",
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : "",
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : -500000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 0,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000.56,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("interestRate", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : "abc",
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : "6",
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : "",
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : -6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 0,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Must be greater then equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6.75,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("termInYears", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : "abc",
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : "15",
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : "",
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : -5,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 0,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 5.5,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Float not accepted.");
+			});
+			QUnit.test("howLongBeforeSelling", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : "abc",
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : "10",
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : "",
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : -5,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 0,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10.75,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Float not accepted.");
+			});
+			QUnit.test("incomeTaxRate", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : "abc"
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : "25"
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : ""
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : -5
+				}).error != undefined, true, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 0
+				}).error, undefined, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 24.25
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("expectedAnnualRentIncrease", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : "abc",
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : "5",
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : "",
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : -5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then or equal 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 0,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 7.25,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("closingCosts", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : "abc",
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : "5",
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : "",
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : -5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
 					monthlyRent : 800,
 					expectedAnnualRentIncrease : 5,
 					purchasePrice : 200000,
@@ -22,12 +764,163 @@
 					closingCosts : 0,
 					annualAppreciation : 3,
 					howLongBeforeSelling : 10,
-					currentAnnualInterest : 0,
 					incomeTaxRate : 28
-				}
-				//format result to decimal places of two
-				var result = mortgageCalculators.compareBuyVsRent(args);
-				assert.deepEqual(result, response , "");
+				}).error, undefined, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 7.25,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Float accepted.");
+			});
+			QUnit.test("annualAppreciation", function(assert) {
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : "abc",
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a text string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : "1",
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Cannot be a number string");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : "",
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Is Required");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : -5,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error != undefined, true, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 0,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Must be greater then or equal to 0.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Integer accepted.");
+				assert.equal(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3.56,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}).error, undefined, "Float accepted.");
+			});
+				
+			// do the calculations
+			QUnit.module('Calculations : not all inputs are set to > 0');
+			QUnit.test("Rent Vs Own", function(assert) {
+				assert.deepEqual(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 0,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 0,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}), response1, "Rent vs Buy calculation.");
+			});	
+			
+			// do the calculations
+			QUnit.module('Calculations : all inputs > 0');
+			QUnit.test("Rent Vs Own", function(assert) {
+				assert.deepEqual(mortgageCalculators.compareBuyVsRent({
+					monthlyRent : 800,
+					expectedAnnualRentIncrease : 5,
+					purchasePrice : 200000,
+					downPayment : 5,
+					interestRate : 6,
+					termInYears : 30,
+					closingCosts : 1.5,
+					annualAppreciation : 3,
+					howLongBeforeSelling : 10,
+					incomeTaxRate : 28
+				}), response2, "Rent vs Buy calculation.");
 			});	
 		</script>
 	</head>
