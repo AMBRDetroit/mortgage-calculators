@@ -95,12 +95,12 @@ window.mortgageCalculators.howMuchCanIBorrow = function(args){
 			conservative : {
 				principalAndInterest : formatResult((debtToPaymentRatio.conservative * grossMonthlyIncome) - monthlyDebtPayment) ,
 				taxesAndInsurance : formatResult(monthlyCostOfPropertyTaxAndInsurance),
-				totalMonthlyPayment : formatResult((debtToPaymentRatio.conservative * grossMonthlyIncome) - monthlyDebtPayment - monthlyCostOfPropertyTaxAndInsurance)
+				totalMonthlyPayment : formatResult((debtToPaymentRatio.conservative * grossMonthlyIncome) - monthlyDebtPayment + monthlyCostOfPropertyTaxAndInsurance)
 			},
 			aggressive : {
 				principalAndInterest : formatResult((debtToPaymentRatio.aggressive * grossMonthlyIncome) - monthlyDebtPayment),
 				taxesAndInsurance : formatResult(monthlyCostOfPropertyTaxAndInsurance),
-				totalMonthlyPayment : formatResult((debtToPaymentRatio.aggressive * grossMonthlyIncome) - monthlyDebtPayment - monthlyCostOfPropertyTaxAndInsurance)
+				totalMonthlyPayment : formatResult((debtToPaymentRatio.aggressive * grossMonthlyIncome) - monthlyDebtPayment + monthlyCostOfPropertyTaxAndInsurance)
 			}	
 		}
 	};
