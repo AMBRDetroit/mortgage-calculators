@@ -132,12 +132,12 @@ mortgageCalculators.howMuchCanIBorrow({
     aggressive: {
       principalAndInterest: 1320,
       taxesAndInsurance: 200,
-      totalMonthlyPayment: 1120
+      totalMonthlyPayment: 1520
     },
     conservative: {
       principalAndInterest: 1040,
       taxesAndInsurance: 200,
-      totalMonthlyPayment: 840
+      totalMonthlyPayment: 1240
     }
   }
 }
